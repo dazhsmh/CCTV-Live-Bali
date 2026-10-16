@@ -1,6 +1,6 @@
 # CCTV Live Denpasar
 
-Website statis viewer multi-kamera lalu lintas Kota Denpasar.
+Website statis open source viewer multi-kamera lalu lintas Kota Denpasar.
 
 Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/)
 
