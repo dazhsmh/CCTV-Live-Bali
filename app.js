@@ -1,1 +1,336 @@
-const CONFIG={timezone:"Asia/Makassar",maxLive:9},CAMS=[["GUNUNG AGUNG","Simpang Wahidin - Gunung Agung","https://atcs.denpasarkota.go.id/stream/A001GUNUNGAGUNGPTZ/stream.m3u8"],["KAPTEN SUJANA","Simpang Buluh indah - Gunung Agung","https://atcs.denpasarkota.go.id/stream/A002KAPTENSUJANAPTZ/stream.m3u8"],["GUNUNG SALAK","Simpang Teuku Umar Barat - Gunung Salak","https://atcs.denpasarkota.go.id/stream/A003GUNUNGSALAKPTZ/stream.m3u8"],["TEUKU UMAR","Simpang Imam Bonjol - Teuku Umar","https://atcs.denpasarkota.go.id/stream/A004TEUKUUMARPTZ1/stream.m3u8"],["BATANTA","Simpang Teuku Umar - Batanta","https://atcs.denpasarkota.go.id/stream/A005BATANTAPTZ/stream.m3u8"],["SOPUTAN","Simpang Imam Bonjol - Gunung Soputan","https://atcs.denpasarkota.go.id/stream/A006SOPUTANPTZ/stream.m3u8"],["BALUN","Simpang Cokroaminoto - Maruti","https://atcs.denpasarkota.go.id/stream/A007BALUNPTZ/stream.m3u8"],["MAHENDRADATTA","Simpang Teuku Umar Barat - Western Ring Road","https://atcs.denpasarkota.go.id/stream/A008MAHENDRADATTAPTZ/stream.m3u8"],["PERUMNAS","Simpang Western Ring Road - Buana Raya","https://atcs.denpasarkota.go.id/stream/A009PERUMNASPTZ/stream.m3u8"],["PERMATA HIJAU","Simpang Western Ring Road - Permata Hijau","https://atcs.denpasarkota.go.id/stream/A010PERMATAHIJAUPTZ/stream.m3u8"],["MERPATI","Simpang Mahendradatta Utara - Merpati","https://atcs.denpasarkota.go.id/stream/A011MERPATIPTZ/stream.m3u8"],["PULAU SAELUS","Simpang Diponegoro - Pulau Saelus","https://atcs.denpasarkota.go.id/stream/A012PULAUSAELUSPTZ/stream.m3u8"],["SIDAKARYA","Simpang Diponegoro - Sidakarya","https://atcs.denpasarkota.go.id/stream/A013SIDAKARYAPTZ/stream.m3u8"],["KAPTEN JAPA","Simpang Hayam Wuruk - Kapten Japa","https://atcs.denpasarkota.go.id/stream/A014KAPTENJAPAPTZ/stream.m3u8"],["MELATI","Simpang Hayam Wuruk - Melati","https://atcs.denpasarkota.go.id/stream/A015MELATIPTZ/stream.m3u8"],["YOS SUDARSO","Simpang PB Sudirman - Yos Sudarso","https://atcs.denpasarkota.go.id/stream/A016YOSSUDARSOPTZ/stream.m3u8"],["PUPUTAN","Simpang PB Sudirman - Raya Puputan","https://atcs.denpasarkota.go.id/stream/A017PUPUTANPTZ/stream.m3u8"],["DEWI SARTIKA","Simpang Diponegoro - Dewi Sartika","https://atcs.denpasarkota.go.id/stream/A018DEWISARTIKAPTZ/stream.m3u8"],["FE UNUD","Simpang PB Sudirman - Serma Mendra","https://atcs.denpasarkota.go.id/stream/A019FEUNUDPTZ/stream.m3u8"],["WATURENGGONG","Simpang PB Sudirman - Waturenggong","https://atcs.denpasarkota.go.id/stream/A020WATURENGGONGPTZ/stream.m3u8"],["PULAU BUTON","Simpang Diponegoro - Pulau Buton","https://atcs.denpasarkota.go.id/stream/A021PULAUBUTONPTZ/stream.m3u8"],["UBUNG","Simpang Gatot Subroto - Cokroaminoto","https://atcs.denpasarkota.go.id/stream/A022UBUNGPTZ1/stream.m3u8"],["CATURMUKA","Simpang Udayana - Surapati","https://atcs.denpasarkota.go.id/stream/A023CATURMUKAPTZ/stream.m3u8"],["ARJUNA","Simpang Gajah Mada - Arjuna","https://atcs.denpasarkota.go.id/stream/A024ARJUNAPTZ/stream.m3u8"],["THAMRIN","Simpang Imam Bonjol - Thamrin","https://atcs.denpasarkota.go.id/stream/A025THAMRINPTZ/stream.m3u8"],["PULAU BIAK","Simpang Imam Bonjol - Pulau Biak","https://atcs.denpasarkota.go.id/stream/A026PULAUBIAKPTZ/stream.m3u8"],["GUNUNG SUBUR","Simpang Imam Bonjol - Gunung Subur","https://atcs.denpasarkota.go.id/stream/A027GUNUNGSUBURPTZ/stream.m3u8"],["PULAU GALANG","Simpang Imam Bonjol - Pulau Galang","https://atcs.denpasarkota.go.id/stream/A028PULAUGALANGPTZ/stream.m3u8"],["TANGKUBAN PERAHU","Simpang Teuku Umar Barat - Gunung Lumut","https://atcs.denpasarkota.go.id/stream/A029TANGKUBANPERAHUPTZ/stream.m3u8"],["CARGO","Simpang Gatot Subroto - Cargo","https://atcs.denpasarkota.go.id/stream/A030CARGOPTZ/stream.m3u8"],["PIDADA","Simpang Gatot Subroto - Pidada","https://atcs.denpasarkota.go.id/stream/A031PIDADAPTZ/stream.m3u8"],["AHMAD YANI","Simpang Gatot Subroto - Ahmad Yani","https://atcs.denpasarkota.go.id/stream/A032AHMADYANIPTZ/stream.m3u8"],["NANGKA","Simpang Gatot Subroto - Nangka","https://atcs.denpasarkota.go.id/stream/A033NANGKAPTZ1/stream.m3u8"],["KENYERI","Simpang Gatot Subroto - Kenyeri","https://atcs.denpasarkota.go.id/stream/A034KENYERIPTZ/stream.m3u8"],["NOJA","Simpang Gatot Subroto - Noja","https://atcs.denpasarkota.go.id/stream/A035NOJAPTZ/stream.m3u8"],["TRENGGULI","Simpang Gatot Subroto - Trenggana","https://atcs.denpasarkota.go.id/stream/A036TRENGGULIPTZ/stream.m3u8"],["KEN AROK","Simpang Ahmad Yani - Ken Arok","https://atcs.denpasarkota.go.id/stream/A037KENAROKPTZ/stream.m3u8"],["TOHPATI","Simpang Gatot Subroto - WR Supratman","https://atcs.denpasarkota.go.id/stream/A038TOHPATIPTZ/stream.m3u8"],["KEBO IWA","Simpang Gatot Subroto - Kebo Iwa","https://atcs.denpasarkota.go.id/stream/A039KEBOIWAPTZ/stream.m3u8"],["SEKARSARI","Simpang IB Mantra - Sekarsari","https://atcs.denpasarkota.go.id/stream/A040SEKARSARIPTZ/stream.m3u8"],["GEMITIR","Simpang IB Mantra - Gemitir","https://atcs.denpasarkota.go.id/stream/A041GEMITIRPTZ/stream.m3u8"],["SEDAP MALAM","Simpang Hang Tuah - Sedap Malam","https://atcs.denpasarkota.go.id/stream/A042SEDAPMALAMPTZ/stream.m3u8"],["GUNUNG GALUNGGUNG","Simpang Cokroaminoto - Gunung Galunggung","https://atcs.denpasarkota.go.id/stream/A043GUNUNGGALUNGGUNGPTZ/stream.m3u8"],["WARIBANG","Simpang WR Supratman - Waribang","https://atcs.denpasarkota.go.id/stream/A044WARIBANGPTZ/stream.m3u8"],["SURABI","Simpang WR Supratman - Surabi","https://atcs.denpasarkota.go.id/stream/A045SURABIPTZ/stream.m3u8"],["SUBITA","Simpang WR Supratman - Subita","https://atcs.denpasarkota.go.id/stream/A046SUBITAPTZ/stream.m3u8"],["KECUBUNG","Simpang WR Supratman - Kecubung","https://atcs.denpasarkota.go.id/stream/A047KECUBUNGPTZ/stream.m3u8"],["NUSA INDAH","Simpang Hayam Wuruk - Nusa Indah","https://atcs.denpasarkota.go.id/stream/A048NUSAINDAHPTZ/stream.m3u8"],["TUKAD UNDA","Simpang Raya Puputan - Tukad Unda","https://atcs.denpasarkota.go.id/stream/A049TUKADUNDAPTZ/stream.m3u8"],["JALAN GUNUNG AGUNG","Ruas Jalan Gunung Agung","https://atcs.denpasarkota.go.id/stream/A050JALANGUNUNGAGUNGPTZ/stream.m3u8"],["SURADIPA","Simpang Ahmad Yani Utara - Suradipa","https://atcs.denpasarkota.go.id/stream/A051SURADIPAPTZ/stream.m3u8"],["KAPTEN AGUNG","Simpang Surapati - Kapten Agung","https://atcs.denpasarkota.go.id/stream/A052KAPTENAGUNGPTZ/stream.m3u8"],["SIMPANG 6 TEUKU UMAR","Simpang 6 Teuku Umar","https://atcs.denpasarkota.go.id/stream/A053SIMPANG6TEUKUUMARPTZ/stream.m3u8"],["GAJAH MADA BARAT","Simpang Wahidin - Gajah Mada","https://atcs.denpasarkota.go.id/stream/A054GAJAHMADABARATPTZ/stream.m3u8"],["PASAR BADUNG","Simpang Gajah Mada - Sulawesi","https://atcs.denpasarkota.go.id/stream/A055PASARBADUNGPTZ/index.m3u8"],["PELABUHAN SANUR","Pelabuhan Matahari Terbit","https://atcs.denpasarkota.go.id/stream/A056PELABUHANSANURPTZ/stream.m3u8"],["JALAN UDAYANA","Jalan Udayana","https://atcs.denpasarkota.go.id/stream/A065UDAYANAPTZ/stream.m3u8"],["RAYA PUPUTAN - BAJRA SANDHI","Jalan Raya Puputan","https://atcs.denpasarkota.go.id/stream/A066PUPUTANPTZ/stream.m3u8"],["NANGKA - KEMUDA","Simpang Nangka Utara - Kemuda","https://atcs.denpasarkota.go.id/stream/A067NANGKAUTARAPTZ/stream.m3u8"],["SEROJA - KEMUDA","Simpang Kemuda - Seroja","https://atcs.denpasarkota.go.id/stream/A068SEROJAPTZ/stream.m3u8"],["PADMA","Simpang Trenggana - Padma","https://atcs.denpasarkota.go.id/stream/A069PADMAPTZ/stream.m3u8"],["TITI BANDA","Patung Titi Banda","https://atcs.denpasarkota.go.id/stream/A070TITIBANDAPTZ/stream.m3u8"],["BUNDARAN HANG TUAH","Bundaran Hang Tuah","https://atcs.denpasarkota.go.id/stream/A071BUNDARANHANGTUAHPTZ/stream.m3u8"],["DURIAN - KALIASEM","Simpang Durian - Kaliasem","https://atcs.denpasarkota.go.id/stream/A072DURIAN-KALIASEMPTZ/stream.m3u8"],["AHMAD YANI - MARUTI","Simpang Ahmad Yani - Maruti","https://atcs.denpasarkota.go.id/stream/A073AHMADYANI-MARUTIPTZ/stream.m3u8"],["AHMAD YANI - MULAWARMAN","Simpang Ahmad Yani - Mulawarman","https://atcs.denpasarkota.go.id/stream/A074AHMADYANI-MULAWARMANPTZ/stream.m3u8"],["PASAR SATRIA","Ruas Jalan Veteran","https://atcs.denpasarkota.go.id/stream/A075PASARSATRIAPTZ/stream.m3u8"],["BANJAR TAINSIAT","Simpang Nangka Selatan - Pattimura","https://atcs.denpasarkota.go.id/stream/A076BANJARTAINSIATPTZ/stream.m3u8"],["BANJAR BALUN","Simpang Setiabudi - Sutomo","https://atcs.denpasarkota.go.id/stream/A077BANJARBALUNPTZ/stream.m3u8"],["WIBISANA - SETIABUDI","Simpang Setiabudi - Wibisana","https://atcs.denpasarkota.go.id/stream/A078WIBISANA-SETIABUDIPTZ/stream.m3u8"],["LAPANGAN PUPUTAN UTARA","Ruas Jalan Surapati","https://atcs.denpasarkota.go.id/stream/A079LAPANGPUPUTANUTARAPTZ/stream.m3u8"],["SULI - SARI GADING","Simpang Suli - Sari Gading","https://atcs.denpasarkota.go.id/stream/A080SULI-SARIGADINGPTZ/stream.m3u8"],["BANJAR TAMPAK GANGSUL","Simpang Nakula - Werkudara","https://atcs.denpasarkota.go.id/stream/A081BANJARTAMPAKGANGSULPTZ/stream.m3u8"],["VETERAN - ABIMANYU","Simpang Veteran - Abimanyu","https://atcs.denpasarkota.go.id/stream/A082VETERAN-ABIMANYUPTZ/stream.m3u8"],["PURA DALEM YANG BATU","Ruas Jalan Cok Agung Tresna","https://atcs.denpasarkota.go.id/stream/A083PURADALEMYANGBATUPTZ/stream.m3u8"],["POJOK SELATAN MUSEUM BALI","Simpang Sugianyar - Mudita","https://atcs.denpasarkota.go.id/stream/A084POJOKSELATANMUSEUMBALIPTZ/stream.m3u8"],["POJOK UTARA JAGATNATHA","Simpang Surapati - Kaliasem","https://atcs.denpasarkota.go.id/stream/A085POJOKUTARAJAGATNATHAPTZ/stream.m3u8"],["TRENGGANA - SIULAN","Simpang Trenggana - Siulan","https://atcs.denpasarkota.go.id/stream/A086TRENGGANA-SIULANPTZ/stream.m3u8"],["PASAR AGUNG PENINJOAN","Simpang Padma - Cekomaria","https://atcs.denpasarkota.go.id/stream/A087PASARAGUNGPENINJOANPTZ/stream.m3u8"],["TERMINAL KERENENG","Simpang Lely - Rampai","https://atcs.denpasarkota.go.id/stream/A088TERMINALKERENENGPTZ/stream.m3u8"],["RAYA PUPUTAN - LETDA TANTULAR","Simpang Raya Puputan - Tantular","https://atcs.denpasarkota.go.id/stream/A089RAYAPUPUTAN-LETDATANTULARPTZ/stream.m3u8"],["KAPTEN AGUNG - KAPTEN REGUG","Simpang Kapten Agung - Kapten Regug","https://atcs.denpasarkota.go.id/stream/A090KAPTENAGUNG-KAPTENREGUGPTZ/stream.m3u8"],["KAMBOJA - ANGSOKA","Simpang Kamboja - Angsoka","https://atcs.denpasarkota.go.id/stream/A091KAMBOJA-ANGSOKAPTZ/stream.m3u8"],["KAMBOJA RIJASA","Simpang Kamboja - Rijasa","https://atcs.denpasarkota.go.id/stream/A092KAMBOJA-RIJASAPTZ/stream.m3u8"],["DPRD KOTA DENPASAR","Simpang Melati - Cempaka","https://atcs.denpasarkota.go.id/stream/A093DPRDKOTADENPASARPTZ/stream.m3u8"],["KAMBOJA RAMPAI","Simpang Kamboja - Rampai","https://atcs.denpasarkota.go.id/stream/A094KAMBOJA-RAMPAIPTZ/stream.m3u8"],["HAYAM WURUK - LELY","Simpang Hayam Wuruk - Lely","https://atcs.denpasarkota.go.id/stream/A095HAYAMWURUK-LELYPTZ/stream.m3u8"],["SIDAKARYA - BEDUGUL","Simpang Bedugul - Sidakarya","https://atcs.denpasarkota.go.id/stream/A096SIDAKARYA-BEDUGULPTZ/stream.m3u8"],["WATURENGGONG - TUKAD YEH AYA","Simpang Waturenggong - Tukad Yeh Aya","https://atcs.denpasarkota.go.id/stream/A097WATURENGGONG-TUKADYEHAYAPTZ/stream.m3u8"],["TUKAD BARITO - TUKAD BADUNG","Simpang Tukad Barito - Tukad Badung","https://atcs.denpasarkota.go.id/stream/A098TUKADBARITO-TUKADBADUNGPTZ/stream.m3u8"],["SUCI","Jalan Suci","https://atcs.denpasarkota.go.id/stream/A099SUCIPTZ/stream.m3u8"],["PURA DEMAK","Simpang Teuku Umar Barat - Pura Demak","https://atcs.denpasarkota.go.id/stream/A100PURADEMAKPTZ/stream.m3u8"],["BATUKARU - RINJANI","Simpang Batukaru - Rinjani","https://atcs.denpasarkota.go.id/stream/A101BATUKARU-RINJANIPTZ/stream.m3u8"],["UDAYANA - BELITON","Simpang Udayana - Beliton","https://atcs.denpasarkota.go.id/stream/A102UDAYANA-BELITON/stream.m3u8"],["GAJAH MADA BARAT","Simpang Gajah Mada - Thamrin","https://atcs.denpasarkota.go.id/stream/A103GAJAHMADABARATPTZ/index.m3u8"],["SUTOYO - HASANUDIN","Simpang Sutoyo - Hasanudin","https://atcs.denpasarkota.go.id/stream/A104SUTOYO-HASANUDINPTZ/stream.m3u8"],["RSAD UDAYANA","Simpang PB Sudirman -RSAD","https://atcs.denpasarkota.go.id/stream/A105RSADUDAYANAPTZ/stream.m3u8"],["ENGGANO - BUNGIN","Simpang Pulau Bungin - Pulau Enggano","https://atcs.denpasarkota.go.id/stream/A106ENGGANO-BUNGINPTZ/index.m3u8"],["GATSU BARAT - GUNUNG CATUR","Simpang Gatot Subroto Barat - Gunung Catur","https://atcs.denpasarkota.go.id/stream/A107GATSUBARAT-GUNUNGCATURPTZ/stream.m3u8"],["PASAR SANGLAH","Simpang Diponegoro - Waturenggong","https://atcs.denpasarkota.go.id/stream/A108PASARSANGLAHPTZ/stream.m3u8"],["TEUKU UMAR - PULAU SERAM","Simpang Teuku Umar - Pulau Seram","https://atcs.denpasarkota.go.id/stream/A109TEUKUUMAR-PULAUSERAMPTZ/stream.m3u8"],["PULAU KAWE - SATELIT","Simpang Pulau Kawe - Satelit","https://atcs.denpasarkota.go.id/stream/A110PULAUKAWE-SATELITPTZ/stream.m3u8"],["TUKAD BARITO","Simpang Tukad Barito - Tukad Batanghari","https://atcs.denpasarkota.go.id/stream/A113TUKADBARITOPTZ/stream.m3u8"],["SIMPANG MAHENDRADATA - SOPUTAN","Simpang Mahendradata - Soputan","https://atcs.denpasarkota.go.id/stream/A006SOPUTANPTZ/stream.m3u8"],["ANTASURA","Simpang Antasura - Astasura","https://atcs.denpasarkota.go.id/stream/A115ANTASURAPTZ/index.m3u8"],["PEMOGAN","Simpang Pemogan - Pulau Galang","https://atcs.denpasarkota.go.id/stream/A116PEMOGANPTZ/index.m3u8"],["GUNUNG SANGHYANG","Simpang Gunung Agung - Gunung Tangkuban Perahu","https://atcs.denpasarkota.go.id/stream/A117GUNUNGSANGHYANGPTZ/index.m3u8"],["TAMAN PANCING","Simpang Taman Pancing - Pemogan","https://atcs.denpasarkota.go.id/stream/A119TAMANPANCINGPTZ/index.m3u8"],["TUKAD PAKERISAN","Simpang Tukad Pakerisan - Tukad Barito","https://atcs.denpasarkota.go.id/stream/A120TUKADPAKERISANPTZ/stream.m3u8"]].map(([a,t,e],s)=>({id:"c"+s,name:a,detail:t,url:e})),$=a=>document.querySelector(a),grid=$("#grid");let live=new Map,status={};const fT=new Intl.DateTimeFormat("id-ID",{timeZone:CONFIG.timezone,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:!1}),fD=new Intl.DateTimeFormat("id-ID",{timeZone:CONFIG.timezone,weekday:"long",day:"numeric",month:"long",year:"numeric"});function tick(){const a=new Date;$("#jam").textContent=fT.format(a).replace(/\./g,":")+" WITA",$("#tgl").textContent=fD.format(a)}tick(),setInterval(tick,1e3);const warm=[];function attach(a,t,e){const s=a._h;if(s&&!s.dead){if(s.cam===t)return s.onState=e,s.resume(),s.soft;s.hard()}if(!window.Hls||!Hls.isSupported())return attachOld(a,t,e);const n={cam:t,dead:!1,paused:!1,onState:e,stop:null};return n.stop=attachV2(a,t,a=>n.onState&&n.onState(a)),n.resume=()=>{n.paused=!1;const a=warm.indexOf(n);a>=0&&warm.splice(a,1),n.stop.resume()},n.pause=()=>{if(!n.paused)for(n.paused=!0,n.stop.pause(),warm.push(n);warm.length>24;)warm.shift().hard()},n.hard=()=>{n.dead=!0;const t=warm.indexOf(n);t>=0&&warm.splice(t,1),n.stop(),a._h=null},n.soft=()=>n.pause(),n.soft.hard=n.hard,a._h=n,n.soft}function attachV2(a,t,e){if(!window.Hls||!Hls.isSupported())return attachOld(a,t,e);const s=a=>e&&e(a);let n=null,r=!1,A=!1,m=!1,o=0,i=Date.now(),d=!1,u=!1,p=0,c=4;const g=[],l=(a,t)=>g.push(setTimeout(a,t)),T=new AbortController;function S(){if(r)return;n&&(n.destroy(),n=null),s(m?"buf":"cari");const e=n=new Hls({lowLatencyMode:!1,liveSyncDurationCount:4,liveMaxLatencyDurationCount:10,startLevel:0,capLevelToPlayerSize:!0,startFragPrefetch:!0,fragLoadingTimeOut:15e3,maxLiveSyncPlaybackRate:1.15,backBufferLength:30,maxBufferLength:20,maxMaxBufferLength:30,maxBufferHole:1.5,nudgeMaxRetry:10,manifestLoadingMaxRetry:1,manifestLoadingRetryDelay:500,levelLoadingMaxRetry:4,fragLoadingMaxRetry:6,fragLoadingRetryDelay:700});e.loadSource(t.url),e.attachMedia(a),e.on(Hls.Events.MANIFEST_PARSED,()=>a.play().catch(()=>{})),e.on(Hls.Events.LEVEL_LOADED,(a,t)=>{t&&t.details&&t.details.targetduration&&(c=t.details.targetduration)}),e.on(Hls.Events.FRAG_LOADED,()=>{i=Date.now(),d=!1,m=!0,o=0,u||s("on")}),e.on(Hls.Events.ERROR,(a,t)=>{if(t.fatal&&e===n)if(m&&t.type===Hls.ErrorTypes.MEDIA_ERROR)e.recoverMediaError();else{if(m)return o++,void(t.type===Hls.ErrorTypes.NETWORK_ERROR&&o<5?l(()=>{try{e.startLoad(-1)}catch(a){}},Math.min(1500*o,8e3)):l(S,Math.min(2e3*o,15e3)));s("off"),l(S,3e4)}})}const N=setInterval(()=>{if(r||A||!m||!n||document.hidden||a.seeking||a.paused)return;const t=a.buffered,e=a.currentTime;let o=-1,i=-1;for(let a=0;a<t.length;a++)if(e>=t.start(a)-.3&&e<=t.end(a)+.3){o=t.start(a),i=t.end(a);break}if(i<0)return;const d=i-e;u?i>p+1?(u=!1,s("on")):d<.35&&i-o>1&&(a.currentTime=Math.max(o,i-3)):d<.35&&i-o>1?(u=!0,p=i,s("ulang"),a.currentTime=Math.max(o,i-3)):n.liveSyncPosition&&n.liveSyncPosition-e>40&&(a.currentTime=n.liveSyncPosition)},200),U=setInterval(()=>{if(r||A||!m||!n)return;if(document.hidden)return void(i=Date.now());const a=Date.now()-i;if(a>Math.max(3e4,8e3*c))i=Date.now(),d=!1,s(u?"ulang":"buf"),S();else if(a>Math.max(12e3,3e3*c)&&!d){d=!0;try{n.startLoad(-1)}catch(a){}}},2e3),P=()=>{},h=()=>{m&&!u&&s("on")};a.addEventListener("waiting",P),a.addEventListener("playing",h),S();const R=()=>{r=!0,T.abort(),clearInterval(U),clearInterval(N),g.forEach(clearTimeout),a.removeEventListener("waiting",P),a.removeEventListener("playing",h),n&&(n.destroy(),n=null)};return R.pause=()=>{A=!0,n&&n.stopLoad(),a.pause()},R.resume=()=>{if(A=!1,i=Date.now(),d=!1,u=!1,n){n.startLoad(-1);const t=n.liveSyncPosition;t&&(a.currentTime=t)}a.play().catch(()=>{})},R}function attachOld(a,t,e){const s=a=>e&&e(a);if(window.Hls&&Hls.isSupported()){const e=new Hls({lowLatencyMode:!0,liveSyncDurationCount:2,maxBufferLength:8,manifestLoadingMaxRetry:2});return e.loadSource(t.url),e.attachMedia(a),e.on(Hls.Events.MANIFEST_PARSED,()=>a.play().catch(()=>{})),e.on(Hls.Events.FRAG_LOADED,()=>s("on")),e.on(Hls.Events.ERROR,(a,t)=>{t.fatal&&(s("off"),t.type===Hls.ErrorTypes.NETWORK_ERROR?setTimeout(()=>{try{e.startLoad()}catch(a){}},8e3):e.destroy())}),()=>e.destroy()}return a.canPlayType("application/vnd.apple.mpegurl")?(a.src=t.url,a.addEventListener("playing",()=>s("on")),a.addEventListener("error",()=>s("off")),a.play().catch(()=>{}),()=>{a.removeAttribute("src"),a.load()}):(s("off"),()=>{})}const vis=new Set;let hold=!1;function startCam(a){const t=a._cam,e=a.querySelector(".tag");a.classList.remove("wait"),a.querySelector(".v").classList.add("loading"),live.set(a,attach(a.querySelector("video"),t,s=>{{const t=a.querySelector(".v");"cari"===s?t.classList.add("loading"):"off"===s&&t.classList.remove("loading")}e.className="tag "+("on"===s||"off"===s?s:""),e.textContent={on:"LIVE",off:"OFFLINE",buf:"BUFFERING",cari:"MENCARI",ulang:"REPLAY"}[s],status[t.id]="buf"===s||"ulang"===s?"on":s,stat()}))}function fill(){if(hold)return;let a=live.size;for(const t of grid.children)if(vis.has(t)&&!live.has(t))if(a<CONFIG.maxLive)startCam(t),a++;else if(!t.classList.contains("wait")){t.classList.add("wait"),t.querySelector(".v").classList.remove("loading");const a=t.querySelector(".tag");a.className="tag",a.textContent="DIJEDA"}}const io=new IntersectionObserver(a=>{a.forEach(a=>{const t=a.target;a.isIntersecting?vis.add(t):(vis.delete(t),live.has(t)&&(live.get(t)(),live.delete(t)))}),fill()},{rootMargin:"50px"});function syncHold(){const a=document.hidden||dlg.open;a!==hold&&(hold=a,hold?live.forEach(a=>a()):([...live.keys()].forEach(a=>{vis.has(a)&&startCam(a)}),fill()))}function syncModal(){md&&(document.hidden?md():md=attach($("#dv"),mcam,mState))}function render(a){if(io.disconnect(),live.forEach(a=>(a.hard||a)()),warm.splice(0).forEach(a=>a.hard()),live.clear(),vis.clear(),grid.innerHTML="",!a.length)return grid.innerHTML='<p class="empty">Lokasi tidak ditemukan. Coba kata kunci lain.</p>',void stat();const t=document.createDocumentFragment();a.forEach(a=>{const e=document.createElement("article");e.className="cam",e._cam=a,e.innerHTML='<div class="v loading" tabindex="0" role="button" aria-label="Perbesar '+a.name+'"><video muted playsinline autoplay></video><span class="tag">MEMUAT</span><button type="button" class="play" aria-label="Putar kamera">&#9654;</button></div><div class="info"><b></b><span></span></div>',e.querySelector("b").textContent=a.name,e.querySelector("span").textContent=a.detail;const s=e.querySelector(".v");e.querySelector("video").addEventListener("playing",()=>s.classList.remove("loading")),s.onclick=()=>open(a),e.querySelector(".play").onclick=a=>{a.stopPropagation(),startCam(e)},s.onkeydown=t=>{t.target===s&&("Enter"!==t.key&&" "!==t.key||(t.preventDefault(),open(a)))},t.appendChild(e),io.observe(e)}),grid.appendChild(t),stat()}function stat(){const a=Object.values(status).filter(a=>"on"===a).length;$("#stat").textContent=grid.children.length+" kamera, "+a+" aktif"}document.addEventListener("visibilitychange",()=>{syncHold(),syncModal()});let md=null,mcam=null;const dlg=$("#dlg"),mState=a=>{const t=$("#mv");"cari"===a?t.classList.add("loading"):"off"===a&&t.classList.remove("loading")};function open(a){$("#dt").textContent=a.name+" | "+a.detail,mcam=a,dlg.showModal(),$("#mv").classList.add("loading"),md=attach($("#dv"),a,mState),syncHold()}function close(){md&&((md.hard||md)(),md=null),dlg.close()}$("#dv").addEventListener("playing",()=>$("#mv").classList.remove("loading")),$("#dc").onclick=close,dlg.addEventListener("close",()=>{$("#mv").classList.remove("loading"),md&&((md.hard||md)(),md=null),syncHold()}),dlg.addEventListener("click",a=>{a.target===dlg&&close()});const norm=a=>a.toLowerCase().replace(/\s+/g," ").trim();let t,selectedCams=new Set,customSelection=!1;function filteredCams(){const a=norm($("#q").value);return a?CAMS.filter(t=>norm(t.name+" "+t.detail).includes(a)):CAMS}function shownCams(){const a=filteredCams();return customSelection?a.filter(a=>selectedCams.has(a.id)):a}function drawPicker(){const a=filteredCams(),t=$("#daftarPilihan");t.innerHTML="";const e=document.createDocumentFragment();a.forEach(a=>{const t=document.createElement("label");t.className="cam-option";const s=document.createElement("input");s.type="checkbox",s.value=a.id,s.checked=selectedCams.has(a.id),s.addEventListener("change",()=>{s.checked?selectedCams.add(a.id):selectedCams.delete(a.id),customSelection=!0,updatePickerCount()});const n=document.createElement("span"),r=document.createElement("b");r.textContent=a.name;const A=document.createElement("small");A.textContent=a.detail,n.append(r,A),t.append(s,n),e.appendChild(t)}),t.appendChild(e),updatePickerCount()}function updatePickerCount(){$("#pilihCount").textContent=selectedCams.size+" kamera dipilih",$("#pilihCam").setAttribute("aria-expanded",String(!$("#panelCam").hidden))}function refreshGrid(){render(shownCams())}$("#pilihCam").onclick=()=>{const a=$("#panelCam");a.hidden=!a.hidden,$("#pilihCam").setAttribute("aria-expanded",String(!a.hidden)),a.hidden||drawPicker()},$("#pilihSemua").onclick=()=>{filteredCams().forEach(a=>selectedCams.add(a.id)),customSelection=!0,drawPicker()},$("#hapusPilihan").onclick=()=>{selectedCams.clear(),customSelection=!1,drawPicker()},$("#terapkanPilihan").onclick=()=>{customSelection=!0,refreshGrid(),$("#panelCam").hidden=!0,updatePickerCount()},$("#q").addEventListener("input",a=>{clearTimeout(t),t=setTimeout(()=>{drawPicker(),refreshGrid()},200)}),$("#tema").onclick=()=>{const a=document.documentElement,t=a.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");a.dataset.theme="dark"===t?"light":"dark"},$("#reload").onclick=()=>{status={},refreshGrid()},drawPicker(),render(CAMS);
+const grid=$("#grid"),dlg=$("#dlg");
+const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+const VALID=new Set(CAMS.map(c=>c.id));
+
+let live=new Map();
+let status={};
+let lastKnown={};
+
+const loadIds=k=>{const a=LS.get(k,[]);return new Set(Array.isArray(a)?a.filter(id=>VALID.has(id)):[])};
+const favs=loadIds("favs");
+let applied=loadIds("sel");
+let draft=new Set(applied);
+let area=LS.get("area","");
+let favOnly=!!LS.get("favOnly",false);
+let onlyOnline=!!LS.get("onlyOnline",false);
+let sortOnline=!!LS.get("sortOnline",false);
+
+(()=>{
+  const m=location.hash.match(/[#&]cams=([^&]*)/);
+  if(!m)return;
+  const ids=decodeURIComponent(m[1]).split(",").filter(id=>VALID.has(id));
+  if(ids.length){applied=new Set(ids);draft=new Set(ids)}
+})();
+
+const PREFIX=/^(simpang|ruas jalan|jalan|bundaran|patung|pelabuhan)\s+/i;
+function streetsOf(detail){
+  const out=new Set();
+  detail.split(/\s+-\s*|\s*-\s+/).forEach(p=>{
+    p=p.replace(PREFIX,"").replace(/\s+(Barat|Utara|Selatan|Timur)$/i,"").trim();
+    if(p)out.add(p);
+  });
+  return[...out];
+}
+CAMS.forEach(c=>{c.streets=streetsOf(c.detail)});
+const AREAS=(()=>{
+  const n=new Map();
+  CAMS.forEach(c=>c.streets.forEach(s=>n.set(s,(n.get(s)||0)+1)));
+  return[...n].filter(([,k])=>k>=3).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,14).map(([s])=>s);
+})();
+if(!AREAS.includes(area))area="";
+
+function baseCams(){
+  const q=norm($("#q").value);
+  return CAMS.filter(c=>
+    (!q||norm(c.name+" "+c.detail).includes(q))&&
+    (!area||c.streets.includes(area))&&
+    (!favOnly||favs.has(c.id)));
+}
+function shownCams(){
+  let a=baseCams();
+  if(applied.size)a=a.filter(c=>applied.has(c.id));
+  if(sortOnline){
+    const r=c=>lastKnown[c.id]==="on"?0:lastKnown[c.id]==="off"?2:1;
+    a=a.slice().sort((x,y)=>r(x)-r(y));
+  }
+  return a;
+}
+function refreshGrid(){render(shownCams())}
+const emptyText=()=>t(favOnly&&!favs.size?"empty_fav":"empty");
+
+const vis=new Set();
+let hold=false;
+
+function setTag(card,s){
+  card._tag=s;
+  const tg=card.querySelector(".tag");
+  tg.className="tag "+(s==="on"||s==="off"?s:"");
+  tg.textContent=t("tag_"+s);
+}
+function startCam(card){
+  const c=card._cam,v=card.querySelector(".v");
+  card.classList.remove("wait");
+  v.classList.add("loading");
+  live.set(card,attach(card.querySelector("video"),c,s=>{
+    if(s==="cari")v.classList.add("loading");
+    else if(s==="off")v.classList.remove("loading");
+    setTag(card,s);
+    const st=s==="buf"||s==="ulang"?"on":s;
+    status[c.id]=st;
+    card.dataset.state=st;
+    if(st==="on"||st==="off")lastKnown[c.id]=st;
+    stat();
+  }));
+}
+function stopCam(card){
+  const h=live.get(card);
+  if(h){(h.hard||h)();live.delete(card)}
+}
+function reloadCam(card){
+  stopCam(card);
+  delete status[card._cam.id];
+  delete card.dataset.state;
+  startCam(card);
+  stat();
+}
+function fill(){
+  if(hold)return;
+  let n=live.size;
+  for(const card of grid.children){
+    if(!vis.has(card)||live.has(card))continue;
+    if(n<CONFIG.maxLive){startCam(card);n++}
+    else if(!card.classList.contains("wait")){
+      card.classList.add("wait");
+      card.querySelector(".v").classList.remove("loading");
+      setTag(card,"dijeda");
+    }
+  }
+}
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const card=e.target;
+    if(e.isIntersecting)vis.add(card);
+    else{vis.delete(card);if(live.has(card)){live.get(card)();live.delete(card)}}
+  });
+  fill();
+},{rootMargin:"50px"});
+
+function syncHold(){
+  const h=document.hidden||dlg.open;
+  if(h===hold)return;
+  hold=h;
+  if(hold)live.forEach(fn=>fn());
+  else{[...live.keys()].forEach(card=>{if(vis.has(card))startCam(card)});fill()}
+}
+
+function labelCard(card){
+  const c=card._cam;
+  card.querySelector(".v").setAttribute("aria-label",t("zoom",{n:c.name}));
+  card.querySelector(".play").setAttribute("aria-label",t("play"));
+  const rt=card.querySelector(".retry");
+  rt.setAttribute("aria-label",t("retry_aria",{n:c.name}));
+  rt.title=t("retry");
+  const fv=card.querySelector(".fav"),on=favs.has(c.id);
+  fv.textContent=on?"★":"☆";
+  fv.setAttribute("aria-pressed",String(on));
+  fv.setAttribute("aria-label",t(on?"fav_del":"fav_add",{n:c.name}));
+  setTag(card,card._tag||"load");
+}
+function dropCard(card){
+  io.unobserve(card);vis.delete(card);stopCam(card);card.remove();
+  if(!grid.querySelector(".cam"))refreshGrid();else{fill();stat()}
+}
+function makeCard(c){
+  const card=document.createElement("article");
+  card.className="cam";card._cam=c;card.dataset.id=c.id;
+  card.innerHTML='<div class="vw"><div class="v loading" tabindex="0" role="button"><video muted playsinline autoplay></video><span class="tag"></span></div><button type="button" class="play">&#9654;</button><button type="button" class="fav"></button></div><div class="info"><b></b><span></span><button type="button" class="retry">&#8635;</button></div>';
+  card.querySelector("b").textContent=c.name;
+  card.querySelector(".info span").textContent=c.detail;
+  const v=card.querySelector(".v");
+  card.querySelector("video").addEventListener("playing",()=>v.classList.remove("loading"));
+  v.onclick=()=>openModal(c);
+  v.onkeydown=e=>{if(e.target===v&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openModal(c)}};
+  card.querySelector(".play").onclick=()=>startCam(card);
+  card.querySelector(".retry").onclick=()=>reloadCam(card);
+  card.querySelector(".fav").onclick=()=>{
+    if(favs.has(c.id))favs.delete(c.id);else favs.add(c.id);
+    LS.set("favs",[...favs]);
+    labelCard(card);
+    if(favOnly&&!favs.has(c.id))dropCard(card);
+  };
+  labelCard(card);
+  return card;
+}
+function render(list){
+  io.disconnect();
+  live.forEach(h=>(h.hard||h)());
+  warm.splice(0).forEach(h=>h.hard());
+  live.clear();vis.clear();
+  status={};
+  grid.innerHTML="";
+  grid.classList.toggle("only-online",onlyOnline);
+  if(!list.length){
+    const p=document.createElement("p");
+    p.className="empty";p.textContent=emptyText();
+    grid.appendChild(p);
+    stat();return;
+  }
+  const f=document.createDocumentFragment();
+  list.forEach(c=>{const card=makeCard(c);f.appendChild(card);io.observe(card)});
+  grid.appendChild(f);
+  stat();
+}
+function stat(){
+  const cards=[...grid.querySelectorAll(".cam")];
+  const shown=onlyOnline?cards.filter(c=>c.dataset.state!=="off"):cards;
+  const active=shown.filter(c=>status[c._cam.id]==="on").length;
+  $("#stat").textContent=t("stat",{n:shown.length,a:active});
+}
+
+let md=null,mcam=null;
+const mState=s=>{
+  const m=$("#mv");
+  if(s==="cari")m.classList.add("loading");else if(s==="off")m.classList.remove("loading");
+};
+function openModal(c){
+  $("#dt").textContent=c.name+" | "+c.detail;
+  mcam=c;
+  dlg.showModal();
+  $("#mv").classList.add("loading");
+  md=attach($("#dv"),c,mState);
+  syncHold();
+}
+function closeModal(){
+  if(md){(md.hard||md)();md=null}
+  dlg.close();
+}
+function syncModal(){
+  if(md)document.hidden?md():md=attach($("#dv"),mcam,mState);
+}
+$("#dv").addEventListener("playing",()=>$("#mv").classList.remove("loading"));
+$("#dc").onclick=closeModal;
+dlg.addEventListener("close",()=>{
+  $("#mv").classList.remove("loading");
+  if(md){(md.hard||md)();md=null}
+  syncHold();
+});
+dlg.addEventListener("click",e=>{if(e.target===dlg)closeModal()});
+document.addEventListener("visibilitychange",()=>{syncHold();syncModal()});
+
+function updatePickBtn(){
+  $("#pilihCam").textContent=t("pick")+(applied.size?" ("+applied.size+")":"");
+  $("#pilihCam").setAttribute("aria-expanded",String(!$("#panelCam").hidden));
+}
+function updatePickerCount(){$("#pilihCount").textContent=t("picker_count",{n:draft.size})}
+function drawPicker(){
+  const list=$("#daftarPilihan");
+  list.innerHTML="";
+  const f=document.createDocumentFragment();
+  baseCams().forEach(c=>{
+    const label=document.createElement("label");label.className="cam-option";
+    const cb=document.createElement("input");
+    cb.type="checkbox";cb.value=c.id;cb.checked=draft.has(c.id);
+    cb.addEventListener("change",()=>{cb.checked?draft.add(c.id):draft.delete(c.id);updatePickerCount()});
+    const span=document.createElement("span"),b=document.createElement("b"),s=document.createElement("small");
+    b.textContent=c.name;s.textContent=c.detail;
+    span.append(b,s);label.append(cb,span);f.appendChild(label);
+  });
+  list.appendChild(f);
+  updatePickerCount();
+}
+function applySelection(){
+  applied=new Set(draft);
+  LS.set("sel",[...applied]);
+  updatePickBtn();
+  refreshGrid();
+}
+function flash(btn,text){
+  btn.textContent=text;
+  clearTimeout(btn._t);
+  btn._t=setTimeout(()=>{btn.textContent=t("copy_link")},1800);
+}
+async function copyLink(){
+  const btn=$("#salinLink"),ids=[...(draft.size?draft:applied)];
+  if(!ids.length){flash(btn,t("copy_none"));return}
+  const url=location.href.split("#")[0]+"#cams="+ids.join(",");
+  try{await navigator.clipboard.writeText(url)}
+  catch(e){window.prompt(t("copy_prompt"),url);return}
+  flash(btn,t("copied"));
+}
+$("#pilihCam").onclick=()=>{
+  const p=$("#panelCam");
+  p.hidden=!p.hidden;
+  if(!p.hidden){draft=new Set(applied);drawPicker()}
+  updatePickBtn();
+};
+$("#pilihSemua").onclick=()=>{baseCams().forEach(c=>draft.add(c.id));drawPicker()};
+$("#hapusPilihan").onclick=()=>{draft.clear();applySelection();drawPicker()};
+$("#terapkanPilihan").onclick=()=>{applySelection();$("#panelCam").hidden=true;updatePickBtn()};
+$("#salinLink").onclick=copyLink;
+
+let qTimer;
+$("#q").addEventListener("input",()=>{
+  clearTimeout(qTimer);
+  qTimer=setTimeout(()=>{if(!$("#panelCam").hidden)drawPicker();refreshGrid()},200);
+});
+
+function drawChips(){
+  const box=$("#chips");
+  box.innerHTML="";
+  const add=(label,value)=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="chip";b.textContent=label;
+    b.setAttribute("aria-pressed",String(area===value));
+    b.onclick=()=>{
+      area=area===value?"":value;
+      LS.set("area",area);
+      drawChips();
+      if(!$("#panelCam").hidden)drawPicker();
+      refreshGrid();
+    };
+    box.appendChild(b);
+  };
+  add(t("area_all"),"");
+  AREAS.forEach(a=>add(a,a));
+  if(!area)box.firstChild.onclick=()=>{};
+}
+function syncToggles(){
+  $("#fFav").setAttribute("aria-pressed",String(favOnly));
+  $("#fOn").setAttribute("aria-pressed",String(onlyOnline));
+  $("#fSort").setAttribute("aria-pressed",String(sortOnline));
+}
+$("#fFav").onclick=()=>{favOnly=!favOnly;LS.set("favOnly",favOnly);syncToggles();if(!$("#panelCam").hidden)drawPicker();refreshGrid()};
+$("#fOn").onclick=()=>{onlyOnline=!onlyOnline;LS.set("onlyOnline",onlyOnline);syncToggles();grid.classList.toggle("only-online",onlyOnline);stat()};
+$("#fSort").onclick=()=>{sortOnline=!sortOnline;LS.set("sortOnline",sortOnline);syncToggles();refreshGrid()};
+
+$("#tema").onclick=()=>{
+  const root=document.documentElement;
+  const cur=root.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";
+  root.dataset.theme=next;
+  LS.set("theme",next);
+};
+$("#reload").onclick=()=>{status={};lastKnown={};refreshGrid()};
+
+let tick,wxDraw;
+function onLang(){
+  applyI18n();
+  updatePickBtn();
+  drawChips();
+  updatePickerCount();
+  grid.querySelectorAll(".cam").forEach(labelCard);
+  const e=grid.querySelector(".empty");
+  if(e)e.textContent=emptyText();
+  stat();
+  if(wxDraw)wxDraw();
+  if(tick)tick();
+}
+$("#lang").onclick=()=>{setLang(getLang()==="id"?"en":"id");onLang()};
+
+tick=startClock();
+wxDraw=startWeather($("#wx"));
+applyI18n();
+syncToggles();
+updatePickBtn();
+drawChips();
+refreshGrid();

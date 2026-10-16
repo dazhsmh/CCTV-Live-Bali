@@ -1,1 +1,64 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>CCTV Live Denpasar</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap"><link rel="stylesheet" href="style.css"></head><body><header><h1>CCTV Live Denpasar<small>Pantauan lalu lintas ATCS Kota Denpasar</small></h1><div class="clock" aria-live="off"><b id="jam">--:--:--</b><span id="tgl"></span></div></header><div class="bar"><input type="search" id="q" placeholder="Cari nama jalan atau simpang" aria-label="Cari lokasi"> <button id="pilihCam" type="button" aria-expanded="false" aria-controls="panelCam">Pilih beberapa kamera</button> <button id="tema" type="button">Ganti tema</button> <button id="reload" type="button">Muat ulang semua</button> <span class="stat" id="stat"></span></div><section id="panelCam" class="picker" hidden aria-label="Pilih kamera yang ditampilkan"><div class="picker-head"><b>Pilih kamera yang ingin ditampilkan</b><span id="pilihCount">0 kamera dipilih</span></div><div class="picker-actions"><button id="pilihSemua" type="button">Pilih semua hasil</button> <button id="hapusPilihan" type="button">Hapus pilihan</button> <button id="terapkanPilihan" type="button">Tampilkan pilihan</button></div><div id="daftarPilihan" class="picker-list"></div><p class="picker-help">Centang lebih dari satu kamera. Jika tidak ada pilihan khusus, semua kamera akan ditampilkan.</p></section><main id="grid"></main><footer>Sumber video: <a href="https://atcs.denpasarkota.go.id/" target="_blank" rel="noopener noreferrer">ATCS Kota Denpasar</a>. Situs ini tidak berafiliasi dengan Pemerintah Kota Denpasar.</footer><dialog id="dlg"><div class="dh"><b id="dt"></b><button id="dc" type="button">Tutup</button></div><div class="mv" id="mv"><video id="dv" muted autoplay playsinline controls></video></div></dialog><script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CCTV Live Denpasar</title>
+<script>try{var th=JSON.parse(localStorage.getItem("cctv.theme"));if(th==="dark"||th==="light")document.documentElement.dataset.theme=th}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1><span data-i18n="title">CCTV Live Denpasar</span><small data-i18n="subtitle">Pantauan lalu lintas ATCS Kota Denpasar</small></h1>
+  <div class="wx" id="wx" hidden><span class="wx-ic" aria-hidden="true"></span><span class="wx-t"><b></b><small></small></span></div>
+  <div class="clock" aria-live="off"><b id="jam">--:--:--</b><span id="tgl"></span></div>
+</header>
+
+<div class="bar">
+  <input type="search" id="q" data-i18n-ph="search_ph" data-i18n-aria="search_aria" placeholder="Cari nama jalan atau simpang" aria-label="Cari lokasi">
+  <button id="pilihCam" type="button" aria-expanded="false" aria-controls="panelCam">Pilih beberapa kamera</button>
+  <button id="tema" type="button" data-i18n="theme">Ganti tema</button>
+  <button id="lang" type="button" data-i18n="langbtn">EN</button>
+  <button id="reload" type="button" data-i18n="reload">Muat ulang semua</button>
+  <a class="btn" href="auto.html" data-i18n="kiosk">Auto mode</a>
+  <span class="stat" id="stat"></span>
+</div>
+
+<div class="filters">
+  <div class="toggles">
+    <button id="fFav" type="button" class="chip" aria-pressed="false" data-i18n="fav">★ Favorit</button>
+    <button id="fOn" type="button" class="chip" aria-pressed="false" data-i18n="only_online">Hanya online</button>
+    <button id="fSort" type="button" class="chip" aria-pressed="false" data-i18n="sort_online" data-i18n-title="sort_hint">Online duluan</button>
+  </div>
+  <div class="chips" id="chips" role="group" data-i18n-aria="area_aria" aria-label="Filter berdasarkan jalan"></div>
+</div>
+
+<section id="panelCam" class="picker" hidden data-i18n-aria="picker_aria" aria-label="Pilih kamera yang ditampilkan">
+  <div class="picker-head"><b data-i18n="picker_title">Pilih kamera yang ingin ditampilkan</b><span id="pilihCount">0</span></div>
+  <div class="picker-actions">
+    <button id="pilihSemua" type="button" data-i18n="pick_all">Pilih semua hasil</button>
+    <button id="hapusPilihan" type="button" data-i18n="clear">Hapus pilihan</button>
+    <button id="salinLink" type="button" data-i18n="copy_link">Salin link</button>
+    <button id="terapkanPilihan" type="button" data-i18n="apply">Tampilkan pilihan</button>
+  </div>
+  <div id="daftarPilihan" class="picker-list"></div>
+  <p class="picker-help" data-i18n="picker_help">Centang lebih dari satu kamera. Jika tidak ada pilihan khusus, semua kamera akan ditampilkan.</p>
+</section>
+
+<main id="grid"></main>
+
+<footer><span data-i18n="footer1">Sumber video: </span><a href="https://atcs.denpasarkota.go.id/" target="_blank" rel="noopener noreferrer">ATCS Kota Denpasar</a><span data-i18n="footer2">. Situs ini tidak berafiliasi dengan Pemerintah Kota Denpasar.</span></footer>
+
+<dialog id="dlg">
+  <div class="dh"><b id="dt"></b><button id="dc" type="button" data-i18n="close">Tutup</button></div>
+  <div class="mv" id="mv"><video id="dv" muted autoplay playsinline controls></video></div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
+<script src="cameras.js"></script>
+<script src="common.js"></script>
+<script src="player.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
