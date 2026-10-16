@@ -9,7 +9,7 @@ Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/)
 - Proyek pribadi, **tidak berafiliasi dengan ATCS Kota Denpasar** maupun Pemkot Denpasar.
 - Video diambil langsung dari server ATCS oleh browser pengunjung. Tidak disimpan atau disiarkan ulang. Hak atas video milik ATCS.
 - Jika ATCS membatasi atau mematikan stream, tampilan ini tidak akan berfungsi.
-- **Vibe code project**: kode dibuat dengan bantuan AI dan belum diaudit formal.
+- **Vibe code project**: kode dibuat dengan bantuan AI.
 
 ## Fitur
 
