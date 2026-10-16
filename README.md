@@ -9,7 +9,7 @@ Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/)
 - Proyek pribadi, **tidak berafiliasi dengan ATCS Kota Denpasar** maupun Pemkot Denpasar.
 - Video diambil langsung dari server ATCS oleh browser pengunjung. Tidak disimpan atau disiarkan ulang. Hak atas video milik ATCS.
 - Jika ATCS membatasi atau mematikan stream, tampilan ini tidak akan berfungsi.
-- Data cuaca berasal dari [Open-Meteo](https://open-meteo.com/) dan diminta langsung oleh browser pengunjung.
+- Data cuaca berasal dari [Open-Meteo](https://open-meteo.com/) dan direquest langsung oleh browser pengunjung.
 - **Vibe code project**: kode dibuat dengan bantuan AI.
 
 ## Fitur
@@ -19,7 +19,7 @@ Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/)
 - Ketuk kamera untuk memperbesar
 - Auto mode (`auto.html`): kamera berganti otomatis tiap 10 detik sampai 2 menit, cocok untuk layar TV atau pos jaga. Ada tombol sebelumnya/berikutnya/jeda, layar penuh, pintasan keyboard (←, →, spasi, F), dan kamera offline dilewati otomatis
 
-**Menyaring**
+**Filter**
 - Chip jalan utama (Gatot Subroto, Imam Bonjol, Teuku Umar, dan lainnya) dibuat otomatis dari data lokasi
 - Favorit (ikon bintang di tiap kamera), hanya online, dan online duluan
 - Tombol coba lagi di tiap kamera
@@ -44,8 +44,6 @@ Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/)
 | `cameras.js` | Daftar kamera dan ID-nya |
 | `common.js` | Konfigurasi, terjemahan, penyimpanan lokal, jam, dan cuaca |
 | `player.js` | Pemutar HLS (memakai hls.js dari CDN) |
-
-Tanpa proses build. Unggah semua file ke hosting statis apa pun (Vercel, GitHub Pages, dan sebagainya).
 
 ## Pengaturan
 
