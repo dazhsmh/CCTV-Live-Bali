@@ -43,3 +43,4 @@ dialog.pano video{aspect-ratio:var(--ar,32/9);object-fit:contain}
 .mv:fullscreen video,dialog .mv:fullscreen video{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));max-height:none;aspect-ratio:auto}
 dialog.pano .mv:fullscreen video{width:100vw;height:auto;max-height:100vh;aspect-ratio:var(--ar,32/9)}
 .v .tag{top:auto;bottom:8px}
+@media(max-width:720px){.stat{margin-left:0;flex:1 1 100%;text-align:center}.bar{justify-content:center}.toggles{justify-content:center}.chips{justify-content:safe center}}
