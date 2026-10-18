@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d141b">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CCTV Bali">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CCTV Live Bangli</title>
+<script>try{var th=JSON.parse(localStorage.getItem("cctv.theme"));if(th==="dark"||th==="light")document.documentElement.dataset.theme=th}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=3">
+</head>
+<body>
+<header>
+  <h1><span data-i18n="title">CCTV Live Bangli</span><small data-i18n="subtitle">Pantauan CCTV Kabupaten Bangli</small></h1>
+  <div class="wx" id="wx" hidden><span class="wx-ic" aria-hidden="true"></span><span class="wx-t"><b></b><small></small></span></div>
+  <div class="clock" aria-live="off"><b id="jam">--:--:--</b><span id="tgl"></span></div>
+</header>
+
+<div class="bar">
+  <a class="btn" href="../" data-i18n="back_home">← Semua kabupaten</a>
+  <input type="search" id="q" data-i18n-ph="search_ph" data-i18n-aria="search_aria" placeholder="Cari nama jalan atau simpang" aria-label="Cari lokasi">
+  <button id="pilihCam" type="button" aria-expanded="false" aria-controls="panelCam">Pilih beberapa kamera</button>
+  <button id="tema" type="button"></button>
+  <button id="lang" type="button" data-i18n="langbtn">EN</button>
+  <button id="reload" type="button" data-i18n="reload">Muat ulang semua</button>
+  <a class="btn" href="../auto/#r=bangli" data-i18n="kiosk">Auto mode</a>
+  <span class="stat" id="stat"></span>
+</div>
+
+<div class="filters">
+  <div class="toggles">
+    <button id="fFav" type="button" class="chip" aria-pressed="false" data-i18n="fav">★ Favorit</button>
+    <button id="fOn" type="button" class="chip" aria-pressed="false" data-i18n="only_online">Hanya online</button>
+    <button id="fSort" type="button" class="chip" aria-pressed="false" data-i18n="sort_online" data-i18n-title="sort_hint">Online duluan</button>
+  </div>
+  <div class="chips" id="chips" role="group" data-i18n-aria="area_aria" aria-label="Filter berdasarkan jalan"></div>
+</div>
+
+<section id="panelCam" class="picker" hidden data-i18n-aria="picker_aria" aria-label="Pilih kamera yang ditampilkan">
+  <div class="picker-head"><b data-i18n="picker_title">Pilih kamera yang ingin ditampilkan</b><span id="pilihCount">0</span></div>
+  <div class="picker-actions">
+    <button id="pilihSemua" type="button" data-i18n="pick_all">Pilih semua hasil</button>
+    <button id="hapusPilihan" type="button" data-i18n="clear">Hapus pilihan</button>
+    <button id="salinLink" type="button" data-i18n="copy_link">Salin link</button>
+    <button id="terapkanPilihan" type="button" data-i18n="apply">Tampilkan pilihan</button>
+  </div>
+  <div id="daftarPilihan" class="picker-list"></div>
+  <p class="picker-help" data-i18n="picker_help">Centang lebih dari satu kamera. Jika tidak ada pilihan khusus, semua kamera akan ditampilkan.</p>
+</section>
+
+<main id="grid"></main>
+
+<footer><span data-i18n="footer1">Sumber video: </span><a href="https://balisatudata.baliprov.go.id/" target="_blank" rel="noopener noreferrer">Bali Satu Data</a><span data-i18n="footer2">. Situs ini tidak berafiliasi dengan Pemerintah Provinsi Bali maupun pemerintah kabupaten/kota.</span></footer>
+
+<dialog id="dlg">
+  <div class="dh"><b id="dt"></b><div class="dbtns"><button id="dprev" type="button" data-i18n-aria="cam_prev" data-i18n-title="cam_prev" aria-label="Kamera sebelumnya" title="Kamera sebelumnya"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button id="dnext" type="button" data-i18n-aria="cam_next" data-i18n-title="cam_next" aria-label="Kamera berikutnya" title="Kamera berikutnya"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button><button id="dfull" type="button" data-i18n-aria="k_full" data-i18n-title="k_full" aria-label="Layar penuh" title="Layar penuh"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><button id="dc" type="button" data-i18n-aria="close" data-i18n-title="close" aria-label="Tutup" title="Tutup"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>
+  <div class="mv" id="mv"><video id="dv" muted autoplay playsinline controls controlslist="nofullscreen"></video></div>
+  <p class="dkb" id="dkb" data-i18n="kb_player">← → pindah kamera · F layar penuh · Esc tutup</p>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
+<script>window.REGION_ID="bangli"</script>
+<script src="../assets/cameras.js"></script>
+<script src="../assets/common.js?v=13"></script>
+<script src="../assets/player.js"></script>
+<script src="../assets/app.js?v=11"></script>
+</body>
+</html>

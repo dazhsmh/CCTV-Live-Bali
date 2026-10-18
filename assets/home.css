@@ -1,0 +1,337 @@
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.mapsec{max-width:1040px;margin:0 auto;padding:4px 10px 20px}
+.mapwrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.mapbox{position:relative;perspective:1200px;container-type:inline-size}
+.bmap,.mks{transform-style:preserve-3d}
+.bmap{display:block;width:100%;height:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+.rg{transform-box:fill-box;transform-origin:center;fill:var(--panel);stroke:color-mix(in srgb,var(--mute) 55%,var(--panel));stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .2s,transform .25s cubic-bezier(.2,.8,.2,1)}
+.rg.on{fill:color-mix(in srgb,var(--acc) 15%,var(--panel))}
+.rg.none{fill:color-mix(in srgb,var(--panel) 55%,var(--bg));cursor:default}
+.hl{filter:drop-shadow(0 4px 8px color-mix(in srgb,var(--acc) 45%,transparent));fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none}
+
+.mks{position:absolute;inset:0;pointer-events:none;--s:clamp(34px,5.2cqw,46px)}
+.mk{position:absolute;transform:translate(-50%,-50%);width:var(--s);height:var(--s);padding:0;border:0;border-radius:50%;background:var(--acc);color:var(--bg);display:grid;place-items:center;pointer-events:auto;cursor:pointer;text-decoration:none;box-shadow:0 0 0 3px var(--panel),0 2px 8px rgba(0,0,0,.28);transition:transform .15s,box-shadow .15s}
+.mk svg{width:66%;height:66%;display:block}
+.mk.on{transform:translate(-50%,-50%) scale(1.15);box-shadow:0 0 0 3px var(--panel),0 0 0 6px color-mix(in srgb,var(--acc) 45%,transparent),0 3px 10px rgba(0,0,0,.3)}
+.mk::after{content:"";position:absolute;inset:-8px;border-radius:50%}
+.mk:focus-visible{outline:3px solid var(--acc);outline-offset:5px}
+.mk.none{background:var(--mute);opacity:.55;cursor:default;box-shadow:0 0 0 3px var(--panel)}
+.mk.none.on{opacity:.8}
+.mk-dot{position:absolute;right:-2px;top:-2px;width:30%;height:30%;min-width:9px;min-height:9px;border-radius:50%;background:var(--live);border:2px solid var(--panel)}
+.mk-lb{position:absolute;top:100%;margin-top:5px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.82rem;font-weight:800;font-stretch:85%;color:var(--ink);pointer-events:none;text-shadow:0 0 3px var(--panel),0 0 3px var(--panel),0 0 6px var(--panel)}
+.mk.none .mk-lb{color:var(--mute)}
+
+.mk-go .l-short{display:none}
+.mcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:2px;justify-content:center}
+.mcard .mc-k{color:var(--mute);font-size:.78rem}
+.mcard .mc-n{font-size:1.45rem;font-weight:800;font-stretch:85%;line-height:1.15}
+.mcard .mc-c{color:var(--mute);font-size:.88rem}
+.mcard .mc-h{margin:0;color:var(--mute);font-size:.88rem;line-height:1.4}
+.mcard .mk-go{margin-top:10px;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}
+
+@media (max-width:699px){
+  .mapsec{padding:0 4px 16px}
+  .mcard{min-height:118px}
+}
+@media (max-width:599px){.mk-lb{display:none}}
+@media (hover:hover) and (pointer:fine){
+  .mcard .mk-go{display:none}
+}
+/* ==========================================================================
+   Animasi halaman beranda
+   Aturan supaya aman dari minifier dan JS yang gagal:
+   - Tidak ada calc() dengan + atau - di properti animasi (minifier yang membuang spasi merusaknya).
+     Jeda elemen buatan JS diisi inline lewat style.animationDelay; jeda elemen statis ditulis literal di sini.
+   - Semua gerak berjalan murni dengan CSS. Kalau JS gagal, tidak ada yang terkunci atau tersembunyi.
+   - Layar pembuka hilang sendiri lewat animasi CSS (bukan lewat JS) dan tidak pernah menghalangi klik.
+   Penanda html.intro (sekali per sesi) dipasang skrip kecil di <head> index.html. Selama intro, jeda ditambah 1,6 dtk.
+   ========================================================================== */
+.mapbox{--tx:0deg;--ty:0deg}
+.bmap,.mks{transform:rotateX(var(--tx)) rotateY(var(--ty));transition:transform .35s ease-out}
+
+@keyframes fadein{from{opacity:0}}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}}
+@keyframes secin{from{opacity:0;transform:translateY(-18px)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.97)}}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(0)}65%{transform:translate(-50%,-50%) scale(1.22)}100%{transform:translate(-50%,-50%) scale(1)}}
+@keyframes ping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.1);opacity:0}}
+@keyframes blink{50%{opacity:.45}}
+@keyframes wordup{from{transform:translateY(105%)}}
+@keyframes glow{from{opacity:0;transform:scale(.6)}}
+@keyframes drift{to{transform:translate(3%,2%) scale(1.06)}}
+@keyframes hlin{from{opacity:0}}
+
+header,.bar,.mapsec,.autobox,footer{animation:secin .8s cubic-bezier(.2,.8,.2,1) backwards}
+header{animation-delay:0s}
+.bar{animation-delay:.12s}
+.mapsec{animation-delay:.24s}
+.autobox{animation-delay:.36s}
+footer{animation-delay:.48s}
+html.intro header{animation-delay:1.6s}
+html.intro .bar{animation-delay:1.72s}
+html.intro .mapsec{animation-delay:1.84s}
+html.intro .autobox{animation-delay:1.96s}
+html.intro footer{animation-delay:2.08s}
+@supports (animation-timeline:view()){
+  .autobox,footer,html.intro .autobox,html.intro footer{animation:secin linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
+}
+
+.glow{position:absolute;left:12%;top:8%;width:76%;height:80%;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,color-mix(in srgb,var(--acc) 16%,transparent),transparent);filter:blur(24px);animation:glow 1.4s ease-out .1s backwards,drift 14s ease-in-out 1.5s infinite alternate}
+html.intro .glow{animation-delay:1.7s,3.1s}
+.rg{animation:rise .7s cubic-bezier(.2,.8,.2,1) backwards}
+.hl{animation:hlin .4s ease-out}
+.mk{animation:pop .55s cubic-bezier(.3,1.2,.4,1) backwards}
+.mk::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--acc);opacity:0;pointer-events:none;animation:ping 2.8s ease-out var(--pd,2s) infinite}
+.mk.none::before{display:none}
+.mk-dot{animation:blink 2s ease-in-out infinite}
+.mk-lb{animation:fadein .5s ease-out backwards}
+
+.hero{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:6px 6px 14px;position:relative;z-index:2}
+.hero-t{margin:0;font-size:clamp(1.7rem,7.5vw,2.1rem);line-height:1.08;font-weight:800;font-stretch:78%;letter-spacing:-.015em;max-width:11em}
+.hero-t .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-right:.26em}
+.hero-t .w>span{display:inline-block;animation:wordup .8s cubic-bezier(.2,.8,.2,1) backwards}
+.hero-t.static .w>span{animation:none}
+.hero-t .w:nth-last-child(-n+2)>span{color:var(--acc)}
+.hero-s{margin:0;color:var(--mute);font-size:1rem;line-height:1.5;max-width:36ch;animation:fadeup .8s ease-out .85s backwards}
+.hero-n{margin:0;font-size:1rem;line-height:1.6;color:var(--mute);animation:fadeup .8s ease-out 1s backwards}
+html.intro .hero-s{animation-delay:2.45s}
+html.intro .hero-n{animation-delay:2.6s}
+.hero-n b{font-size:1.5625rem;line-height:1;letter-spacing:-.01em;font-weight:800;font-stretch:85%;color:var(--acc);font-variant-numeric:tabular-nums}
+
+.autobox{margin:0 10px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.autobox h2{margin:0 0 6px;font-size:1.25rem;line-height:1.2;letter-spacing:-.01em}
+.autobox p{margin:0 0 14px;color:var(--mute);font-size:.9375rem;line-height:1.55;max-width:62ch}
+.chips.wrap{flex-wrap:wrap;overflow:visible;padding-bottom:0;margin-bottom:12px}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:var(--bg);font-weight:700}
+@media (min-width:1040px){.autobox{margin:0 auto 20px;max-width:1020px}}
+@media (max-width:699px){.autobox{margin:0 4px 20px;padding:16px}}
+
+body{font-kerning:normal;font-optical-sizing:auto;font-feature-settings:"kern","liga","calt";text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.hero-t,.hero-n,.autobox h2,.mcard .mc-n{text-wrap:balance;hyphens:manual}
+.hero-s,.autobox p,.mcard .mc-h,footer{text-wrap:pretty;hyphens:manual}
+.mcard .mc-k{font-size:.8rem;letter-spacing:.01em;line-height:1.3}
+.mcard .mc-n{font-size:1.5625rem;line-height:1.1;letter-spacing:-.01em}
+.mcard .mc-c,.mcard .mc-h{font-size:.9375rem;line-height:1.5}
+.chip{font-size:.875rem;line-height:1.2}
+footer{max-width:68ch;margin:0 auto;padding:4px 16px 32px;font-size:.8125rem;line-height:1.6}
+
+/* ==========================================================================
+   Layar pembuka. Ganti gaya lewat atribut di <html data-intro="pop|curtain|fade">
+   pop     : ikon muncul membesar sambil memudar, lalu layar memudar
+   curtain : dua tirai terbuka ke kiri dan kanan
+   fade    : hanya memudar, paling tenang
+   ========================================================================== */
+.splash{display:none;pointer-events:none}
+html.intro .splash{display:grid;place-items:center;position:fixed;inset:0;z-index:100;background:var(--bg);animation:spout .6s ease-in 1.5s forwards}
+@keyframes spout{to{opacity:0;transform:scale(1.04);visibility:hidden}}
+@keyframes sphide{to{visibility:hidden}}
+.sp-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px}
+.sp-ic{position:relative;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--acc);color:var(--bg);box-shadow:0 10px 30px color-mix(in srgb,var(--acc) 40%,transparent);animation:sppop .8s cubic-bezier(.3,1.4,.4,1) .1s backwards}
+.sp-ic svg{width:48%;height:48%}
+.sp-ic::before,.sp-ic::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--acc);opacity:0;animation:ping 1.6s ease-out .7s infinite}
+.sp-ic::after{animation-delay:1.1s}
+@keyframes sppop{0%{opacity:0;transform:scale(.3)}60%{opacity:1;transform:scale(1.14)}100%{transform:scale(1)}}
+.sp-t{font-size:1.5625rem;font-weight:800;font-stretch:80%;letter-spacing:-.01em;animation:fadeup .6s ease-out .45s backwards}
+.sp-bar{width:140px;height:3px;border-radius:2px;background:var(--line);overflow:hidden;animation:fadein .4s ease-out .4s backwards}
+.sp-bar i{display:block;height:100%;background:var(--acc);transform-origin:left;animation:spfill 1.1s cubic-bezier(.6,0,.3,1) .45s backwards}
+@keyframes spfill{from{transform:scaleX(0)}}
+
+html[data-intro="curtain"].intro .splash{background:transparent;animation:sphide 0s linear 2.2s forwards}
+html[data-intro="curtain"] .splash::before,html[data-intro="curtain"] .splash::after{content:"";position:absolute;top:0;bottom:0;width:50.5%;background:var(--bg)}
+html[data-intro="curtain"] .splash::before{left:0;animation:cl .8s cubic-bezier(.7,0,.2,1) 1.4s forwards}
+html[data-intro="curtain"] .splash::after{right:0;animation:cr .8s cubic-bezier(.7,0,.2,1) 1.4s forwards}
+html[data-intro="curtain"] .sp-in{animation:fadeout .3s ease-in 1.2s forwards}
+@keyframes cl{to{transform:translateX(-101%)}}
+@keyframes cr{to{transform:translateX(101%)}}
+@keyframes fadeout{to{opacity:0;visibility:hidden}}
+
+html[data-intro="fade"] .sp-ic{animation:fadein .6s ease-out .1s backwards}
+html[data-intro="fade"] .sp-ic::before,html[data-intro="fade"] .sp-ic::after,html[data-intro="fade"] .sp-bar{display:none}
+html[data-intro="fade"].intro .splash{animation-name:fadeout}
+
+/* ==========================================================================
+   Pengguna yang mematikan animasi di sistemnya (Windows: Efek animasi mati, mode hemat daya, dll):
+   gerak besar diganti pudar halus saja, bukan dimatikan seluruhnya, supaya halaman tetap terasa hidup.
+   Untuk mencoba gerak penuh: buka halaman dengan ?motion=full
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  html:not(.fullmotion) header,html:not(.fullmotion) .bar,html:not(.fullmotion) .mapsec,html:not(.fullmotion) .autobox,html:not(.fullmotion) footer,
+  html:not(.fullmotion) .rg,html:not(.fullmotion) .mk,html:not(.fullmotion) .hero-t .w>span,html:not(.fullmotion) .hero-s,html:not(.fullmotion) .hero-n,
+  html:not(.fullmotion) .sp-ic,html:not(.fullmotion) .sp-t{animation-name:fadein}
+  html:not(.fullmotion) .mk::before,html:not(.fullmotion) .mk-dot,html:not(.fullmotion) .glow,
+  html:not(.fullmotion) .sp-ic::before,html:not(.fullmotion) .sp-ic::after{animation:none}
+  html:not(.fullmotion).intro .splash{animation-name:fadeout}
+  html:not(.fullmotion) .bmap,html:not(.fullmotion) .mks{transition:none;transform:none}
+}
+
+
+.bar{position:relative;z-index:4}
+.sbox{position:relative;flex:1 1 200px;min-width:0;max-width:720px}
+.sbox input{width:100%;padding:10px 12px 10px 40px;font-size:1rem}
+.s-ic{position:absolute;left:12px;top:50%;width:19px;height:19px;margin-top:-9.5px;color:var(--mute);pointer-events:none}
+.sres{position:absolute;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 10px 28px rgba(0,0,0,.22);max-height:min(60vh,420px);overflow:auto}
+.sres[hidden]{display:none}
+.sres li{border-radius:6px}
+.sres li[aria-selected=true]{background:color-mix(in srgb,var(--acc) 14%,var(--panel))}
+.sres a{display:block;min-height:48px;padding:7px 10px;color:inherit;text-decoration:none}
+.sres b,.sres small{display:block;overflow-wrap:anywhere}
+.sres b{font-size:.94rem;line-height:1.3}
+.sres small{color:var(--mute);font-size:.8rem;line-height:1.35}
+.sres .s-msg{padding:10px;color:var(--mute);font-size:.85rem}
+.bar button,.sbox input{min-height:44px}
+/* #tema di style.css punya min-height 38px dengan spesifisitas id; samakan dengan tombol bahasa */
+.bar #tema,.bar #lang{min-height:44px}
+.bar{gap:8px}
+@media (max-width:520px){
+  #tema .tl{display:none}
+  #tema,#lang{min-width:44px;padding-left:0;padding-right:0;justify-content:center}
+}
+@media (pointer:coarse){.chip{min-height:40px}}
+.quick{margin:0 10px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.q-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.q-h h2{margin:0;font-size:1.25rem;line-height:1.2;letter-spacing:-.01em}
+.q-h .btn[hidden]{display:none}
+.qlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:8px}
+.qc{position:relative;display:flex;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.qc:hover,.qc:focus-within{border-color:var(--acc)}
+.qc-main{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;min-height:64px;padding:10px 48px 10px 12px;color:inherit;text-decoration:none;border-radius:8px}
+.qc-main:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.qc-main b{font-size:.94rem;line-height:1.3}
+.qc-main small{color:var(--mute);font-size:.8rem;line-height:1.35;overflow-wrap:anywhere}
+.qc-main .qc-t{color:var(--acc);font-weight:600}
+.qc-x{position:absolute;top:4px;right:4px;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:transparent;color:#e0a100;font-size:1.1rem;line-height:1}
+.qc-x:hover{background:rgba(224,161,0,.18)}
+.q-note{grid-column:1/-1;margin:10px 0 0;color:var(--mute);font-size:.875rem;line-height:1.5}
+.qlist .q-note{margin:0}
+.q-note:empty{display:none}
+@media (min-width:1040px){.quick{margin:0 auto 20px;max-width:1020px}}
+@media (max-width:699px){.quick{margin:0 4px 20px;padding:16px}}
+@supports (animation-timeline:view()){
+  .quick{animation:secin linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
+}
+@media (prefers-reduced-motion:reduce){
+  html:not(.fullmotion) .searchsec,html:not(.fullmotion) .quick{animation-name:fadein}
+}
+.mapsec{padding-top:20px}
+@media (max-width:699px){.mapsec{padding-top:12px}}
+
+@media (min-width:900px){
+  :root{--gut:16px}
+  .mapsec,.quick,.autobox{width:auto;max-width:none;margin-inline:var(--gut);padding-inline:0}
+  .mapsec{padding-top:28px;padding-bottom:36px}
+  .quick,.autobox{margin-bottom:24px;padding:24px 28px}
+  .mapwrap{grid-template-columns:minmax(260px,min(400px,32%)) minmax(0,1fr);grid-template-rows:1fr auto auto 1fr;column-gap:clamp(12px,2vw,28px);row-gap:0;align-items:center;max-width:calc(400px + 28px + max(560px,calc(100svh*1.25)));margin-inline:auto}
+  .mapbox{grid-column:2;grid-row:1/5;justify-self:start;width:min(100%,max(560px,calc(100svh*1.25)))}
+  .hero{grid-column:1;grid-row:2;align-self:end;padding:0 0 clamp(28px,3vw,40px);gap:14px}
+  .mcard{grid-column:1;grid-row:3;align-self:start;min-height:136px;padding:18px}
+  .hero-t{font-size:clamp(2rem,3.3vw,3.25rem);line-height:1.04;letter-spacing:-.025em;max-width:none}
+  .hero-s{font-size:1.125rem;line-height:1.55;max-width:34ch}
+  .hero-n{font-size:1.0625rem}
+  .hero-n b{font-size:1.75rem}
+  .q-h h2,.autobox h2{font-size:1.4rem}
+  .quick .btn,.autobox .btn{min-height:44px}
+}
+@media (min-width:640px){.qlist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+@media (max-width:899px){
+  .mapwrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+
+  .hero{order:1;width:100%;align-items:center;text-align:center;padding:6px 8px 4px;gap:12px}
+  .hero::before{content:"";position:absolute;left:50%;top:-10px;width:min(100%,520px);height:100%;transform:translateX(-50%);z-index:-1;pointer-events:none;background:radial-gradient(closest-side,color-mix(in srgb,var(--acc) 11%,transparent),transparent)}
+  .hero-n{order:-1;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:.875rem;line-height:1.35;color:var(--mute)}
+  .hero-n::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--live);vertical-align:middle;position:relative;top:-1px;animation:blink 2s ease-in-out infinite}
+  .hero-n b{font-size:1.125rem;color:var(--acc)}
+  .hero-t{max-width:12em;font-size:clamp(1.9rem,9vw,2.4rem);letter-spacing:-.02em}
+  .hero-s{max-width:38ch}
+
+  /* Kartu info ringkas, semua isi rata tengah: nama, lalu jenis dan jumlah kamera sebaris, lalu tombol.
+     Tinggi dikunci supaya peta tidak bergeser setelah ketukan pertama (ketukan kedua tetap mengenai wilayah yang sama). */
+  .mcard{order:2;width:100%;max-width:400px;min-height:116px;padding:10px 14px;gap:0;
+    display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:6px;row-gap:2px;align-content:center;align-items:baseline;text-align:center}
+  .mcard .mc-h{grid-column:1/-1}
+  .mcard .mc-n{grid-column:1/-1;grid-row:1;font-size:1.25rem}
+  .mcard .mc-k{grid-row:2;grid-column:1;font-size:.8125rem}
+  .mcard .mc-c{grid-row:2;grid-column:2;font-size:.875rem}
+  .mcard .mc-k::after{content:"\00b7";margin-left:6px}
+  .mcard .mk-go{grid-column:1/-1;grid-row:3;justify-self:center;margin:8px 0 0;padding:0 28px;min-height:40px;align-self:center}
+  .mcard .mk-go .l-full{display:none}
+  .mcard .mk-go .l-short{display:inline}
+
+  .mapbox{order:3;width:100%;max-width:680px}
+}
+@media (min-width:600px) and (max-width:899px){
+  .hero-t{font-size:clamp(2rem,6vw,2.75rem)}
+  .hero-s{font-size:1.0625rem}
+  .mcard{max-width:460px}
+}
+@media (max-width:899px) and (prefers-reduced-motion:reduce){
+  html:not(.fullmotion) .hero-n::before{animation:none}
+}
+
+.chip{display:inline-flex;align-items:center;justify-content:center;transition:background-color .15s,border-color .15s,color .15s,transform .15s,box-shadow .15s,filter .15s}
+.chip[aria-pressed=false]:hover{background:color-mix(in srgb,var(--acc) 12%,var(--panel));transform:scale(1.05)}
+.chip[aria-pressed=true]:hover{background:color-mix(in srgb,var(--acc) 82%,var(--ink));border-color:color-mix(in srgb,var(--acc) 82%,var(--ink));transform:scale(1.05)}
+.chip:active{transform:scale(.96)}
+.autobox .btn,.quick .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-top:0;padding-bottom:0}
+.btn.primary{transition:background-color .15s,border-color .15s,transform .15s}
+.btn.primary:hover{background:color-mix(in srgb,var(--acc) 82%,var(--ink));border-color:color-mix(in srgb,var(--acc) 82%,var(--ink));transform:scale(1.03)}
+.btn.primary:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){
+  html:not(.fullmotion) .chip:hover,html:not(.fullmotion) .chip:active,html:not(.fullmotion) .btn.primary:active,html:not(.fullmotion) .btn.primary:hover{transform:none}
+}
+@media (max-width:599px){
+  .autobox h2{font-size:1.125rem}
+  .autobox p{font-size:.875rem;margin-bottom:12px}
+  .chips.wrap{gap:6px;margin-bottom:12px}
+  .chip{min-height:34px;padding:4px 12px;font-size:.8125rem}
+  .autobox .btn{min-height:42px;padding-left:20px;padding-right:20px;font-size:.9375rem}
+}
+
+@media (max-width:720px){
+  header{justify-content:space-between;align-items:center;flex-wrap:nowrap;gap:12px;padding:10px 14px;text-align:left}
+  header h1{flex:1 1 auto;min-width:0;text-align:left;font-size:1.1rem;line-height:1.15}
+  header h1 small{font-size:.75rem;line-height:1.35;margin-top:2px}
+  header .clock{flex:none;text-align:right}
+  header .clock b{font-size:1.3rem}
+  header .clock span{display:block;font-size:.7rem;line-height:1.3}
+}
+@media (max-width:520px){
+  header h1 small{display:none}
+}
+
+.mcard .mc-kc{display:contents}
+.mcard .mc-k{order:1}.mcard .mc-n{order:2}.mcard .mc-c{order:3}.mcard .mc-w{order:4}.mcard .mk-go{order:5}
+.mcard .mc-w{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.mcard .mc-w[hidden]{display:none}
+.mcard .mc-wi{font-size:1.5rem;line-height:1}
+.mcard .mc-w b{font-size:1.15rem;line-height:1;font-variant-numeric:tabular-nums}
+.mcard .mc-w small{color:var(--mute);font-size:.84rem;line-height:1.2}
+.mcard .mk-go{margin-top:10px}
+@media (min-width:900px){.mcard{min-height:176px}}
+@media (max-width:899px){
+  .mcard{min-height:164px;grid-template-columns:1fr}
+  .mcard .mc-kc{grid-row:2;grid-column:1;display:flex;justify-content:center;align-items:baseline;gap:6px}
+  .mcard .mc-n{grid-column:1}
+  .mcard .mc-w{grid-column:1/-1;grid-row:3;justify-content:center;margin-top:6px;padding-top:6px}
+  .mcard .mk-go{grid-row:4}
+}
+
+.q-h h2{flex:1 1 auto;min-width:0}
+.quick .q-h .btn{flex:none;min-height:38px;height:38px;padding:0 16px;font-size:.9rem;line-height:1;white-space:nowrap;gap:8px}
+.quick .q-h .btn.primary:hover,.quick .q-h .btn.primary:active{transform:none}
+#favPlay::before{content:"";flex:none;width:.7em;height:.8em;background:currentColor;clip-path:polygon(10% 0,100% 50%,10% 100%)}
+@media (max-width:420px){.quick .q-h .btn{padding:0 10px;font-size:.8rem;gap:6px}.q-h h2{font-size:1.1rem;white-space:nowrap}}
+
+@media (min-width:900px){
+  .mcard{
+    align-items:center;justify-content:center;text-align:center;
+    background:color-mix(in srgb,var(--panel) 45%,transparent);
+    border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+    border-radius:16px;
+    -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+    box-shadow:0 8px 30px -12px color-mix(in srgb,var(--ink) 30%,transparent),inset 0 1px 0 color-mix(in srgb,#fff 35%,transparent);
+  }
+  .mcard .mc-w{justify-content:center;align-self:stretch}
+  .mcard .mk-go{align-self:center}
+}

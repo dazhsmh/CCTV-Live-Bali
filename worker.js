@@ -1,0 +1,32 @@
+// Cloudflare Worker: proxy HLS dengan header CORS, khusus host Bali Satu Data dan Kemenhub.
+// Format: https://NAMA.workers.dev/<host>/<path>  ->  https://<host>/<path>
+const ALLOW=["transcode.baliprov.go.id","mitradarat-vidstream.kemenhub.go.id"];
+const cors=()=>({"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Range","Access-Control-Expose-Headers":"Content-Length,Content-Range"});
+
+export default{
+  async fetch(req){
+    if(req.method==="OPTIONS")return new Response(null,{headers:cors()});
+    const u=new URL(req.url),m=u.pathname.match(/^\/([^/]+)(\/.*)$/);
+    if(!m||!ALLOW.includes(m[1]))return new Response("forbidden",{status:403,headers:cors()});
+    const [,host,path]=m,self=u.origin;
+    const up=await fetch("https://"+host+path+u.search,{headers:req.headers.get("Range")?{Range:req.headers.get("Range")}:{}});
+    const h=new Headers(cors());
+    const ct=up.headers.get("Content-Type");if(ct)h.set("Content-Type",ct);
+    if(/\.m3u8$/i.test(path)||/mpegurl/i.test(ct||"")){
+      // Arahkan URL absolut di dalam playlist agar segmen juga lewat proxy
+      const fix=p=>{
+        if(/^https?:\/\//i.test(p)){const x=new URL(p);return ALLOW.includes(x.host)?self+"/"+x.host+x.pathname+x.search:p}
+        return p.startsWith("/")?self+"/"+host+p:p;
+      };
+      const txt=(await up.text()).split("\n").map(l=>{
+        const s=l.trim();
+        if(!s)return l;
+        return s.startsWith("#")?l.replace(/URI="([^"]+)"/g,(_,p)=>'URI="'+fix(p)+'"'):fix(s);
+      }).join("\n");
+      h.set("Cache-Control","no-store");
+      return new Response(txt,{status:up.status,headers:h});
+    }
+    h.set("Cache-Control","public, max-age=30");
+    return new Response(up.body,{status:up.status,headers:h});
+  }
+};

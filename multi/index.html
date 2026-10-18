@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Multi-kamera favorit - CCTV Live Bali</title>
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CCTV Bali">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="../assets/auto.css?v=2">
+<link rel="stylesheet" href="../assets/multi.css">
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="mgrid" id="mgrid"></div>
+  <div class="msg" id="msg" hidden></div>
+  <div class="shade top-shade"></div>
+  <div class="shade bottom-shade"></div>
+
+  <div class="top">
+    <a class="kbtn" id="mback" href="../" data-i18n="multi_back">← Beranda</a>
+    <div class="mtitle"><b data-i18n="multi_title">Multi-kamera favorit</b><small id="mcount"></small></div>
+    <div class="kclock"><b id="jam">--:--:--</b><span id="tgl"></span></div>
+  </div>
+
+  <div class="bottom">
+    <div class="kinfo">
+      <b id="mpage"></b>
+      <small class="khint" id="mhint"></small>
+    </div>
+    <div class="kctl">
+      <div class="seg" role="group" data-i18n-aria="multi_grid" aria-label="Grid">
+        <button type="button" class="kbtn" id="g2" aria-pressed="false">2×2</button>
+        <button type="button" class="kbtn" id="g3" aria-pressed="false">3×3</button>
+      </div>
+      <button type="button" id="mprev" class="kbtn" data-i18n="multi_prev">Sebelumnya</button>
+      <button type="button" id="mpause" class="kbtn" data-i18n="multi_pause">Jeda</button>
+      <button type="button" id="mnext" class="kbtn" data-i18n="multi_next">Berikutnya</button>
+      <label class="ksel"><span data-i18n="multi_every">Ganti halaman tiap</span> <select id="msecs"></select></label>
+      <button type="button" id="mfull" class="kbtn" data-i18n="k_full">Layar penuh</button>
+      <button type="button" id="mlang" class="kbtn" data-i18n="langbtn">EN</button>
+      <button type="button" id="mhide" class="kbtn" data-i18n="k_hide_ui">Sembunyikan UI</button>
+    </div>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+  <button type="button" id="mshow" class="kbtn kshow" hidden data-i18n="k_show_ui">Tampilkan UI</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
+<script src="../assets/cameras.js?v=9"></script>
+<script src="../assets/common.js?v=13"></script>
+<script src="../assets/player.js"></script>
+<script src="../assets/multi.js"></script>
+</body>
+</html>

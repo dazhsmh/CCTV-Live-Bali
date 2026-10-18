@@ -5,6 +5,21 @@ const VALID=new Set(CAMS.map(c=>c.id));
 let live=new Map();
 let status={};
 let lastKnown={};
+const KNOWN_TTL=2*3600*1000;
+const known=(()=>{
+  const o=LS.get("known",{}),n=Date.now(),k={};
+  if(o&&typeof o==="object")for(const id in o){
+    const v=o[id];
+    if(Array.isArray(v)&&(v[0]==="on"||v[0]==="off")&&n-v[1]<KNOWN_TTL)k[id]=v;
+  }
+  return k;
+})();
+for(const id in known)if(VALID.has(id))lastKnown[id]=known[id][0];
+let saveT=0;
+function saveKnown(){
+  clearTimeout(saveT);
+  saveT=setTimeout(()=>LS.set("known",known),1500);
+}
 
 const loadIds=k=>{const a=LS.get(k,[]);return new Set(Array.isArray(a)?a.filter(id=>VALID.has(id)):[])};
 const favs=loadIds("favs");
@@ -13,7 +28,7 @@ let draft=new Set(applied);
 let area=LS.get("area","");
 let favOnly=!!LS.get("favOnly",false);
 let onlyOnline=!!LS.get("onlyOnline",false);
-let sortOnline=!!LS.get("sortOnline",false);
+let sortOnline=LS.get("sortOnline",true)!==false;
 
 (()=>{
   const m=location.hash.match(/[#&]cams=([^&]*)/);
@@ -31,7 +46,7 @@ function streetsOf(detail){
   });
   return[...out];
 }
-CAMS.forEach(c=>{c.streets=streetsOf(c.detail)});
+CAMS.forEach(c=>{c.streets=c.streets||streetsOf(c.detail)});
 const AREAS=(()=>{
   const n=new Map();
   CAMS.forEach(c=>c.streets.forEach(s=>n.set(s,(n.get(s)||0)+1)));
@@ -58,6 +73,27 @@ function shownCams(){
 function refreshGrid(){render(shownCams())}
 const emptyText=()=>t(favOnly&&!favs.size?"empty_fav":"empty");
 
+const rankOf=id=>lastKnown[id]==="on"?0:lastKnown[id]==="off"?2:1;
+let ordT=0,lastScroll=0;
+addEventListener("scroll",()=>{lastScroll=Date.now()},{passive:true});
+function applyOrder(){
+  let i=0;
+  for(const card of grid.children){
+    if(!card._cam)continue;
+    card.style.order=sortOnline?rankOf(card._cam.id)*10000+i:"";
+    i++;
+  }
+}
+function queueOrder(){
+  if(!sortOnline||ordT)return;
+  ordT=setTimeout(()=>{
+    ordT=0;
+    if(!sortOnline)return;
+    if(dlg.open||Date.now()-lastScroll<1500){queueOrder();return}
+    applyOrder();
+  },2500);
+}
+
 const vis=new Set();
 let hold=false;
 
@@ -78,7 +114,10 @@ function startCam(card){
     const st=s==="buf"||s==="ulang"?"on":s;
     status[c.id]=st;
     card.dataset.state=st;
-    if(st==="on"||st==="off")lastKnown[c.id]=st;
+    if(st==="on"||st==="off"){
+      if(lastKnown[c.id]!==st)queueOrder();
+      lastKnown[c.id]=st;known[c.id]=[st,Date.now()];saveKnown();
+    }
     stat();
   }));
 }
@@ -106,11 +145,37 @@ function fill(){
     }
   }
 }
+// Kamera di luar layar dihentikan total (bukan sekadar dijeda), lalu disambung baru begitu tampil lagi.
+function parkCard(card){
+  if(live.has(card))stopCam(card);
+  if(card._tag!=="dijeda"){setTag(card,"dijeda");card.querySelector(".v").classList.remove("loading")}
+}
+let rcQ=0;
+function reconcile(){
+  rcQ=0;
+  if(hold)return;
+  const H=innerHeight;
+  for(const card of grid.children){
+    if(!card._cam)continue;
+    const r=card.getBoundingClientRect();
+    if(r.bottom>-50&&r.top<H+50)vis.add(card);
+    else if(vis.has(card)){vis.delete(card);parkCard(card)}
+  }
+  fill();
+  live.forEach((h,card)=>{
+    const v=card.querySelector("video");
+    if(vis.has(card)&&v.paused&&v.readyState>=2)v.play().catch(()=>{});
+  });
+}
+const queueReconcile=()=>{if(!rcQ)rcQ=requestAnimationFrame(reconcile)};
+addEventListener("scroll",queueReconcile,{passive:true});
+addEventListener("resize",queueReconcile);
+setInterval(reconcile,1500);
 const io=new IntersectionObserver(es=>{
   es.forEach(e=>{
     const card=e.target;
     if(e.isIntersecting)vis.add(card);
-    else{vis.delete(card);if(live.has(card)){live.get(card)();live.delete(card)}}
+    else{vis.delete(card);parkCard(card)}
   });
   fill();
 },{rootMargin:"50px"});
@@ -142,7 +207,7 @@ function dropCard(card){
 }
 function makeCard(c){
   const card=document.createElement("article");
-  card.className="cam";card._cam=c;card.dataset.id=c.id;
+  card.className="cam"+(c.pano?" pano":"");card._cam=c;card.dataset.id=c.id;
   card.innerHTML='<div class="vw"><div class="v loading" tabindex="0" role="button"><video muted playsinline autoplay></video><span class="tag"></span></div><button type="button" class="play">&#9654;</button><button type="button" class="fav"></button></div><div class="info"><b></b><span></span><button type="button" class="retry">&#8635;</button></div>';
   card.querySelector("b").textContent=c.name;
   card.querySelector(".info span").textContent=c.detail;
@@ -155,6 +220,7 @@ function makeCard(c){
   card.querySelector(".fav").onclick=()=>{
     if(favs.has(c.id))favs.delete(c.id);else favs.add(c.id);
     LS.set("favs",[...favs]);
+    FavAt.touch(c.id,favs.has(c.id));
     labelCard(card);
     if(favOnly&&!favs.has(c.id))dropCard(card);
   };
@@ -166,6 +232,7 @@ function render(list){
   live.forEach(h=>(h.hard||h)());
   warm.splice(0).forEach(h=>h.hard());
   live.clear();vis.clear();
+  clearTimeout(ordT);ordT=0;
   status={};
   grid.innerHTML="";
   grid.classList.toggle("only-online",onlyOnline);
@@ -192,14 +259,51 @@ const mState=s=>{
   const m=$("#mv");
   if(s==="cari")m.classList.add("loading");else if(s==="off")m.classList.remove("loading");
 };
-function openModal(c){
-  $("#dt").textContent=c.name+" | "+c.detail;
+function loadModal(c){
+  if(md){(md.hard||md)();md=null}
+  Recent.add(c.id);
+  $("#dt").textContent=c.name+(c.detail?" | "+c.detail:"");$("#dt").title=$("#dt").textContent;
   mcam=c;
-  dlg.showModal();
+  dlg.classList.toggle("pano",!!c.pano);$("#dv").style.removeProperty("--ar");
   $("#mv").classList.add("loading");
   md=attach($("#dv"),c,mState);
+  const n=navCams().length>1;
+  $("#dprev").hidden=$("#dnext").hidden=!n;
+}
+function openModal(c){
+  dlg.showModal();
+  loadModal(c);
   syncHold();
 }
+function navCams(){
+  const cards=[...grid.querySelectorAll(".cam")].map((el,i)=>({el,i,o:parseInt(el.style.order,10)||0}))
+    .filter(x=>getComputedStyle(x.el).display!=="none");
+  cards.sort((x,y)=>x.o-y.o||x.i-y.i);
+  return cards.map(x=>x.el._cam);
+}
+function modalGo(d){
+  if(!dlg.open||!mcam)return;
+  const cs=navCams();
+  if(cs.length<2)return;
+  const i=cs.findIndex(c=>c.id===mcam.id);
+  loadModal(cs[((i<0?0:i)+d+cs.length)%cs.length]);
+}
+const canFs=document.fullscreenEnabled||document.webkitFullscreenEnabled;
+if(!canFs)$("#dfull").hidden=true;
+function toggleModalFs(){
+  const d=document,el=$("#mv");
+  if(d.fullscreenElement||d.webkitFullscreenElement)(d.exitFullscreen||d.webkitExitFullscreen).call(d);
+  else if(canFs)(el.requestFullscreen||el.webkitRequestFullscreen).call(el);
+}
+$("#dprev").onclick=()=>modalGo(-1);
+$("#dnext").onclick=()=>modalGo(1);
+$("#dfull").onclick=toggleModalFs;
+document.addEventListener("keydown",e=>{
+  if(!dlg.open||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key==="ArrowRight"){e.preventDefault();modalGo(1)}
+  else if(e.key==="ArrowLeft"){e.preventDefault();modalGo(-1)}
+  else if((e.key==="f"||e.key==="F")&&canFs){e.preventDefault();toggleModalFs()}
+});
 function closeModal(){
   if(md){(md.hard||md)();md=null}
   dlg.close();
@@ -207,9 +311,11 @@ function closeModal(){
 function syncModal(){
   if(md)document.hidden?md():md=attach($("#dv"),mcam,mState);
 }
+$("#dv").addEventListener("loadedmetadata",()=>{const d=$("#dv");if(mcam&&mcam.pano&&d.videoWidth)d.style.setProperty("--ar",d.videoWidth+"/"+d.videoHeight)});
 $("#dv").addEventListener("playing",()=>$("#mv").classList.remove("loading"));
 $("#dc").onclick=closeModal;
 dlg.addEventListener("close",()=>{
+  if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document);
   $("#mv").classList.remove("loading");
   if(md){(md.hard||md)();md=null}
   syncHold();
@@ -277,6 +383,7 @@ $("#q").addEventListener("input",()=>{
 function drawChips(){
   const box=$("#chips");
   box.innerHTML="";
+  box.hidden=AREAS.length<2;
   const add=(label,value)=>{
     const b=document.createElement("button");
     b.type="button";b.className="chip";b.textContent=label;
@@ -303,14 +410,7 @@ $("#fFav").onclick=()=>{favOnly=!favOnly;LS.set("favOnly",favOnly);syncToggles()
 $("#fOn").onclick=()=>{onlyOnline=!onlyOnline;LS.set("onlyOnline",onlyOnline);syncToggles();grid.classList.toggle("only-online",onlyOnline);stat()};
 $("#fSort").onclick=()=>{sortOnline=!sortOnline;LS.set("sortOnline",sortOnline);syncToggles();refreshGrid()};
 
-$("#tema").onclick=()=>{
-  const root=document.documentElement;
-  const cur=root.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
-  const next=cur==="dark"?"light":"dark";
-  root.dataset.theme=next;
-  LS.set("theme",next);
-};
-$("#reload").onclick=()=>{status={};lastKnown={};refreshGrid()};
+$("#reload").onclick=()=>{status={};lastKnown={};for(const id in known)delete known[id];LS.set("known",known);refreshGrid()};
 
 let tick,wxDraw;
 function onLang(){
@@ -334,3 +434,12 @@ syncToggles();
 updatePickBtn();
 drawChips();
 refreshGrid();
+
+(()=>{
+  const m=location.hash.match(/[#&]cam=([^&]*)/);
+  if(!m)return;
+  const c=CAMS.find(x=>x.id===decodeURIComponent(m[1]));
+  const rest=location.hash.slice(1).split("&").filter(p=>p&&!/^cam=/.test(p)).join("&");
+  history.replaceState(null,"",location.pathname+location.search+(rest?"#"+rest:""));
+  if(c)openModal(c);
+})();

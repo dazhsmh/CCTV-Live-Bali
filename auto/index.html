@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d141b">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CCTV Bali">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Auto Mode - CCTV Live Denpasar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="../assets/auto.css?v=2">
+</head>
+<body>
+<div class="stage" id="stage">
+  <video id="kv" muted autoplay playsinline></video>
+  <div class="msg" id="msg" hidden></div>
+  <div class="shade top-shade"></div>
+  <div class="shade bottom-shade"></div>
+
+  <div class="top">
+    <a class="kbtn" id="kback" href="../" data-i18n="k_back">← Kembali</a>
+    <div class="wx" id="wx" hidden><span class="wx-ic" aria-hidden="true"></span><span class="wx-t"><b></b><small></small></span></div>
+    <div class="kclock"><b id="jam">--:--:--</b><span id="tgl"></span></div>
+  </div>
+
+  <div class="bottom">
+    <div class="kinfo">
+      <span class="ktag" id="ktag"></span>
+      <b id="kname"></b>
+      <span id="kdetail"></span>
+      <small id="kcount"></small>
+    </div>
+    <div class="kpanel" id="kpanel" hidden role="group" data-i18n-aria="k_settings" aria-label="Pengaturan">
+      <div class="kgrp">
+        <label class="ksel"><span data-i18n="k_every">Ganti tiap</span> <select id="ksecs"></select></label>
+        <label class="ksel"><span data-i18n="k_source">Sumber</span> <select id="ksrc"></select></label>
+      </div>
+      <div class="kgrp">
+        <button type="button" id="kshuf" class="kbtn" aria-pressed="false" data-i18n="k_shuffle">Acak</button>
+        <button type="button" id="konfirst" class="kbtn" aria-pressed="false" data-i18n="k_on_first">Online duluan</button>
+        <button type="button" id="konly" class="kbtn" aria-pressed="false" data-i18n="k_only_on">Hanya online</button>
+      </div>
+      <div class="kgrp">
+        <button type="button" id="kregbtn" class="kbtn" aria-expanded="false" aria-controls="kreg"></button>
+        <button type="button" id="klang" class="kbtn" data-i18n="langbtn">EN</button>
+      </div>
+      <div class="kreg" id="kreg" hidden role="group" data-i18n-aria="k_region_aria" aria-label="Pilih kabupaten yang diputar"></div>
+    </div>
+    <p class="khint" data-i18n="kb_auto">← → pindah · Spasi jeda · F layar penuh · H sembunyikan UI</p>
+    <div class="kctl">
+      <button type="button" id="kprev" class="kbtn" data-i18n="k_prev">Sebelumnya</button>
+      <button type="button" id="kpause" class="kbtn" data-i18n="k_pause">Jeda</button>
+      <button type="button" id="knext" class="kbtn" data-i18n="k_next">Berikutnya</button>
+      <button type="button" id="kset" class="kbtn" aria-expanded="false" aria-controls="kpanel" data-i18n="k_settings">Pengaturan</button>
+      <button type="button" id="kfull" class="kbtn" data-i18n="k_full">Layar penuh</button>
+      <button type="button" id="khide" class="kbtn" data-i18n="k_hide_ui">Sembunyikan UI</button>
+    </div>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+  <button type="button" id="kshow" class="kbtn kshow" hidden data-i18n="k_show_ui">Tampilkan UI</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
+<script src="../assets/cameras.js"></script>
+<script src="../assets/common.js?v=13"></script>
+<script src="../assets/player.js"></script>
+<script src="../assets/auto.js"></script>
+</body>
+</html>

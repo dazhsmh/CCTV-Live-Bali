@@ -1,64 +1,80 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-intro="pop">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CCTV Live Denpasar</title>
-<script>try{var th=JSON.parse(localStorage.getItem("cctv.theme"));if(th==="dark"||th==="light")document.documentElement.dataset.theme=th}catch(e){}</script>
+<meta name="theme-color" content="#0d141b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CCTV Bali">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CCTV Live Bali</title>
+<script data-cfasync="false">try{var th=JSON.parse(localStorage.getItem("cctv.theme"));if(th==="dark"||th==="light")document.documentElement.dataset.theme=th}catch(e){}</script>
+<script data-cfasync="false">try{var d=document.documentElement;if(/[?&]motion=full/.test(location.search))d.classList.add("fullmotion");if(/[?&]intro=1/.test(location.search)||!sessionStorage.getItem("cctv.intro")){d.classList.add("intro");sessionStorage.setItem("cctv.intro","1")}}catch(e){}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/style.css?v=9">
+<link rel="stylesheet" href="assets/home.css?v=21">
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true"><div class="sp-in"><span class="sp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(14 12 9)"><rect x="3.2" y="5.4" width="14.6" height="7.2" rx="2.2" fill="currentColor" fill-opacity=".2"/><path d="M5 4.1h11.4"/><rect x="17.8" y="6.4" width="3.4" height="5.2" rx="1" fill="currentColor" fill-opacity=".2"/><circle cx="19.5" cy="9" r="1.35" fill="currentColor" stroke="none"/><circle cx="6.5" cy="8.3" r=".75" fill="currentColor" stroke="none"/><path d="M9 8.3h5" stroke-opacity=".55" stroke-width="1.1"/></g><circle cx="9.6" cy="14.3" r="1.1" fill="currentColor" stroke="none"/><path d="M9.6 14.8v4.4"/><path d="M5.6 20.4h8"/></svg></span><b class="sp-t" data-i18n="home_title">CCTV Live Bali</b><span class="sp-bar"><i></i></span></div></div>
 <header>
-  <h1><span data-i18n="title">CCTV Live Denpasar</span><small data-i18n="subtitle">Pantauan lalu lintas ATCS Kota Denpasar</small></h1>
-  <div class="wx" id="wx" hidden><span class="wx-ic" aria-hidden="true"></span><span class="wx-t"><b></b><small></small></span></div>
+  <h1><span data-i18n="home_title">CCTV Live Bali</span><small data-i18n="home_sub">Pantau CCTV publik di seluruh kabupaten dan kota di Bali</small></h1>
   <div class="clock" aria-live="off"><b id="jam">--:--:--</b><span id="tgl"></span></div>
 </header>
 
 <div class="bar">
-  <input type="search" id="q" data-i18n-ph="search_ph" data-i18n-aria="search_aria" placeholder="Cari nama jalan atau simpang" aria-label="Cari lokasi">
-  <button id="pilihCam" type="button" aria-expanded="false" aria-controls="panelCam">Pilih beberapa kamera</button>
-  <button id="tema" type="button" data-i18n="theme">Ganti tema</button>
+  <button id="tema" type="button"></button>
   <button id="lang" type="button" data-i18n="langbtn">EN</button>
-  <button id="reload" type="button" data-i18n="reload">Muat ulang semua</button>
-  <a class="btn" href="auto.html" data-i18n="kiosk">Auto mode</a>
-  <span class="stat" id="stat"></span>
+  <div class="sbox">
+    <svg class="s-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+    <input type="search" id="sq" role="combobox" aria-expanded="false" aria-controls="sres" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Cari lokasi, kamera" data-i18n-ph="search_home_ph" data-i18n-aria="search_home_aria" aria-label="Cari lokasi atau kamera">
+    <ul class="sres" id="sres" role="listbox" hidden></ul>
+  </div>
 </div>
 
-<div class="filters">
-  <div class="toggles">
-    <button id="fFav" type="button" class="chip" aria-pressed="false" data-i18n="fav">★ Favorit</button>
-    <button id="fOn" type="button" class="chip" aria-pressed="false" data-i18n="only_online">Hanya online</button>
-    <button id="fSort" type="button" class="chip" aria-pressed="false" data-i18n="sort_online" data-i18n-title="sort_hint">Online duluan</button>
+<section class="mapsec" aria-labelledby="heroT">
+  <h2 id="mapTitle" class="sr" data-i18n="map_title">Peta CCTV Bali per kabupaten</h2>
+  <div class="mapwrap" id="mapwrap">
+    <div class="hero" id="hero">
+      <h2 class="hero-t" id="heroT"></h2>
+      <p class="hero-s" data-i18n="hero_sub">Pilih kabupaten di peta untuk melihat kamera yang sedang menyala.</p>
+      <p class="hero-n"><b id="nCam">0</b>&nbsp;<span data-i18n="hero_cams">kamera tersebar di</span> <b id="nReg">0</b>&nbsp;<span data-i18n="hero_regions">kabupaten/kota</span></p>
+    </div>
+    <div class="mapbox" id="mapbox">
+      <div class="glow" aria-hidden="true"></div>
+      <svg id="map" class="bmap" role="group" data-i18n-aria="map_aria" aria-label="Peta Bali per kabupaten"></svg>
+      <div class="mks" id="mks"></div>
+    </div>
+    <div class="mcard" id="mcard" aria-live="polite"></div>
   </div>
-  <div class="chips" id="chips" role="group" data-i18n-aria="area_aria" aria-label="Filter berdasarkan jalan"></div>
-</div>
-
-<section id="panelCam" class="picker" hidden data-i18n-aria="picker_aria" aria-label="Pilih kamera yang ditampilkan">
-  <div class="picker-head"><b data-i18n="picker_title">Pilih kamera yang ingin ditampilkan</b><span id="pilihCount">0</span></div>
-  <div class="picker-actions">
-    <button id="pilihSemua" type="button" data-i18n="pick_all">Pilih semua hasil</button>
-    <button id="hapusPilihan" type="button" data-i18n="clear">Hapus pilihan</button>
-    <button id="salinLink" type="button" data-i18n="copy_link">Salin link</button>
-    <button id="terapkanPilihan" type="button" data-i18n="apply">Tampilkan pilihan</button>
-  </div>
-  <div id="daftarPilihan" class="picker-list"></div>
-  <p class="picker-help" data-i18n="picker_help">Centang lebih dari satu kamera. Jika tidak ada pilihan khusus, semua kamera akan ditampilkan.</p>
 </section>
 
-<main id="grid"></main>
+<section class="quick" aria-labelledby="favT">
+  <div class="q-h"><h2 id="favT" data-i18n="fav_title">Kamera favorit</h2><a class="btn primary" id="favPlay" href="multi/" data-i18n="fav_play" hidden>Putar semua favorit</a></div>
+  <div class="qlist" id="favList"></div>
+  <p class="q-note" id="favNote"></p>
+</section>
 
-<footer><span data-i18n="footer1">Sumber video: </span><a href="https://atcs.denpasarkota.go.id/" target="_blank" rel="noopener noreferrer">ATCS Kota Denpasar</a><span data-i18n="footer2">. Situs ini tidak berafiliasi dengan Pemerintah Kota Denpasar.</span></footer>
+<section class="quick" aria-labelledby="recT">
+  <div class="q-h"><h2 id="recT" data-i18n="rec_title">Terakhir dilihat</h2><button class="btn" id="recClear" type="button" data-i18n="rec_clear">Hapus riwayat</button></div>
+  <div class="qlist" id="recList"></div>
+</section>
 
-<dialog id="dlg">
-  <div class="dh"><b id="dt"></b><button id="dc" type="button" data-i18n="close">Tutup</button></div>
-  <div class="mv" id="mv"><video id="dv" muted autoplay playsinline controls></video></div>
-</dialog>
+<section class="autobox" aria-labelledby="atTitle">
+  <h2 id="atTitle" data-i18n="auto_title">Auto mode</h2>
+  <p data-i18n="auto_desc">Putar kamera otomatis dari kabupaten atau kota yang dipilih. Ketuk untuk memilih atau melepas.</p>
+  <div class="chips wrap" id="autoChips" role="group" data-i18n-aria="k_region_aria" aria-label="Pilih kabupaten yang diputar"></div>
+  <a class="btn primary" id="autoStart" href="auto/" data-i18n="auto_start">Mulai auto mode</a>
+</section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
-<script src="cameras.js"></script>
-<script src="common.js"></script>
-<script src="player.js"></script>
-<script src="app.js"></script>
+<footer><span data-i18n="footer1">Sumber video: </span><a href="https://atcs.denpasarkota.go.id/" target="_blank" rel="noopener noreferrer">ATCS Kota Denpasar</a>, <a href="https://balisatudata.baliprov.go.id/" target="_blank" rel="noopener noreferrer">Bali Satu Data</a>, <a href="https://binamarga.pu.go.id/" target="_blank" rel="noopener noreferrer">Bina Marga</a><span data-i18n="footer2_all">. Situs ini tidak berafiliasi dengan Pemerintah Provinsi Bali maupun pemerintah kabupaten/kota.</span></footer>
+
+<script src="assets/cameras.js?v=9"></script>
+<script src="assets/common.js?v=13"></script>
+<script src="assets/bali-map.js?v=9"></script>
+<script src="assets/home.js?v=13"></script>
 </body>
 </html>
