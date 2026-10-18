@@ -262,7 +262,7 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
   .autobox p{font-size:.875rem;margin-bottom:12px}
   .chips.wrap{gap:6px;margin-bottom:12px}
   .chip{min-height:34px;padding:4px 12px;font-size:.8125rem}
-  .autobox .btn{min-height:42px;padding-left:20px;padding-right:20px;font-size:.9375rem}
+  .autobox .btn{display:flex;width:fit-content;margin:0 auto;min-height:42px;padding-left:20px;padding-right:20px;font-size:.9375rem}
 }
 
 @media (max-width:720px){
@@ -272,6 +272,7 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
   header .clock{flex:none;text-align:right}
   header .clock b{font-size:1.3rem}
   header .clock span{display:block;font-size:.7rem;line-height:1.3}
+  .autobox .btn{display:flex;width:fit-content;margin:0 auto;}
 }
 @media (max-width:520px){
   header h1 small{display:none}
