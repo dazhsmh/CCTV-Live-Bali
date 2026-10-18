@@ -38,15 +38,6 @@
 @media (hover:hover) and (pointer:fine){
   .mcard .mk-go{display:none}
 }
-/* ==========================================================================
-   Animasi halaman beranda
-   Aturan supaya aman dari minifier dan JS yang gagal:
-   - Tidak ada calc() dengan + atau - di properti animasi (minifier yang membuang spasi merusaknya).
-     Jeda elemen buatan JS diisi inline lewat style.animationDelay; jeda elemen statis ditulis literal di sini.
-   - Semua gerak berjalan murni dengan CSS. Kalau JS gagal, tidak ada yang terkunci atau tersembunyi.
-   - Layar pembuka hilang sendiri lewat animasi CSS (bukan lewat JS) dan tidak pernah menghalangi klik.
-   Penanda html.intro (sekali per sesi) dipasang skrip kecil di <head> index.html. Selama intro, jeda ditambah 1,6 dtk.
-   ========================================================================== */
 .mapbox{--tx:0deg;--ty:0deg}
 .bmap,.mks{transform:rotateX(var(--tx)) rotateY(var(--ty));transition:transform .35s ease-out}
 
@@ -99,13 +90,13 @@ html.intro .hero-s{animation-delay:2.45s}
 html.intro .hero-n{animation-delay:2.6s}
 .hero-n b{font-size:1.5625rem;line-height:1;letter-spacing:-.01em;font-weight:800;font-stretch:85%;color:var(--acc);font-variant-numeric:tabular-nums}
 
-.autobox{margin:0 10px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.autobox{margin:0 16px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
 .autobox h2{margin:0 0 6px;font-size:1.25rem;line-height:1.2;letter-spacing:-.01em}
 .autobox p{margin:0 0 14px;color:var(--mute);font-size:.9375rem;line-height:1.55;max-width:62ch}
 .chips.wrap{flex-wrap:wrap;overflow:visible;padding-bottom:0;margin-bottom:12px}
 .btn.primary{background:var(--acc);border-color:var(--acc);color:var(--bg);font-weight:700}
 @media (min-width:1040px){.autobox{margin:0 auto 20px;max-width:1020px}}
-@media (max-width:699px){.autobox{margin:0 4px 20px;padding:16px}}
+@media (max-width:699px){.autobox{margin:0 16px 20px;padding:16px}}
 
 body{font-kerning:normal;font-optical-sizing:auto;font-feature-settings:"kern","liga","calt";text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-t,.hero-n,.autobox h2,.mcard .mc-n{text-wrap:balance;hyphens:manual}
@@ -116,12 +107,6 @@ body{font-kerning:normal;font-optical-sizing:auto;font-feature-settings:"kern","
 .chip{font-size:.875rem;line-height:1.2}
 footer{max-width:68ch;margin:0 auto;padding:4px 16px 32px;font-size:.8125rem;line-height:1.6}
 
-/* ==========================================================================
-   Layar pembuka. Ganti gaya lewat atribut di <html data-intro="pop|curtain|fade">
-   pop     : ikon muncul membesar sambil memudar, lalu layar memudar
-   curtain : dua tirai terbuka ke kiri dan kanan
-   fade    : hanya memudar, paling tenang
-   ========================================================================== */
 .splash{display:none;pointer-events:none}
 html.intro .splash{display:grid;place-items:center;position:fixed;inset:0;z-index:100;background:var(--bg);animation:spout .6s ease-in 1.5s forwards}
 @keyframes spout{to{opacity:0;transform:scale(1.04);visibility:hidden}}
@@ -150,11 +135,6 @@ html[data-intro="fade"] .sp-ic{animation:fadein .6s ease-out .1s backwards}
 html[data-intro="fade"] .sp-ic::before,html[data-intro="fade"] .sp-ic::after,html[data-intro="fade"] .sp-bar{display:none}
 html[data-intro="fade"].intro .splash{animation-name:fadeout}
 
-/* ==========================================================================
-   Pengguna yang mematikan animasi di sistemnya (Windows: Efek animasi mati, mode hemat daya, dll):
-   gerak besar diganti pudar halus saja, bukan dimatikan seluruhnya, supaya halaman tetap terasa hidup.
-   Untuk mencoba gerak penuh: buka halaman dengan ?motion=full
-   ========================================================================== */
 @media (prefers-reduced-motion:reduce){
   html:not(.fullmotion) header,html:not(.fullmotion) .bar,html:not(.fullmotion) .mapsec,html:not(.fullmotion) .autobox,html:not(.fullmotion) footer,
   html:not(.fullmotion) .rg,html:not(.fullmotion) .mk,html:not(.fullmotion) .hero-t .w>span,html:not(.fullmotion) .hero-s,html:not(.fullmotion) .hero-n,
@@ -180,7 +160,6 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
 .sres small{color:var(--mute);font-size:.8rem;line-height:1.35}
 .sres .s-msg{padding:10px;color:var(--mute);font-size:.85rem}
 .bar button,.sbox input{min-height:44px}
-/* #tema di style.css punya min-height 38px dengan spesifisitas id; samakan dengan tombol bahasa */
 .bar #tema,.bar #lang{min-height:44px}
 .bar{gap:8px}
 @media (max-width:520px){
@@ -188,7 +167,7 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
   #tema,#lang{min-width:44px;padding-left:0;padding-right:0;justify-content:center}
 }
 @media (pointer:coarse){.chip{min-height:40px}}
-.quick{margin:0 10px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.quick{margin:0 16px 20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
 .q-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .q-h h2{margin:0;font-size:1.25rem;line-height:1.2;letter-spacing:-.01em}
 .q-h .btn[hidden]{display:none}
@@ -206,7 +185,7 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
 .qlist .q-note{margin:0}
 .q-note:empty{display:none}
 @media (min-width:1040px){.quick{margin:0 auto 20px;max-width:1020px}}
-@media (max-width:699px){.quick{margin:0 4px 20px;padding:16px}}
+@media (max-width:699px){.quick{margin:0 16px 20px;padding:16px}}
 @supports (animation-timeline:view()){
   .quick{animation:secin linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
 }
@@ -245,8 +224,6 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
   .hero-t{max-width:12em;font-size:clamp(1.9rem,9vw,2.4rem);letter-spacing:-.02em}
   .hero-s{max-width:38ch}
 
-  /* Kartu info ringkas, semua isi rata tengah: nama, lalu jenis dan jumlah kamera sebaris, lalu tombol.
-     Tinggi dikunci supaya peta tidak bergeser setelah ketukan pertama (ketukan kedua tetap mengenai wilayah yang sama). */
   .mcard{order:2;width:100%;max-width:400px;min-height:116px;padding:10px 14px;gap:0;
     display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:6px;row-gap:2px;align-content:center;align-items:baseline;text-align:center}
   .mcard .mc-h{grid-column:1/-1}

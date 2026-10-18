@@ -265,7 +265,7 @@ function wake(){
 ["pointermove","pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,wake,{passive:true}));
 
 document.addEventListener("keydown",e=>{
-  if(e.ctrlKey||e.metaKey||e.altKey)return; // jangan bentrok dengan Alt+← (kembali) dan Ctrl+F (cari)
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
   const onSel=e.target.closest&&e.target.closest("select");
   if(e.key==="ArrowRight"&&!onSel)next();
   else if(e.key==="ArrowLeft"&&!onSel)prev();

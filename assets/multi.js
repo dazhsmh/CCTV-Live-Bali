@@ -1,5 +1,3 @@
-// Multi-kamera favorit: grid 2x2 / 3x3 dari kamera favorit (gabungan semua kabupaten).
-// Memakai pemutar yang sama dengan halaman lain (attach() di player.js), jadi perilaku sambung ulang tetap sama.
 const stage=$("#stage"),gridEl=$("#mgrid"),msg=$("#msg"),prog=$("#prog");
 const byId=new Map(CAMS.map(c=>[c.id,c]));
 const RMAP=new Map(REGIONS.map(r=>[r.id,r]));

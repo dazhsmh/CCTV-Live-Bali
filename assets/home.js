@@ -112,7 +112,7 @@ function drawCard(){
   const w=document.createElement("span");
   w.className="mc-w";w.dataset.id=id;fillWx(w);
   const kc=document.createElement("div");
-  kc.className="mc-kc";kc.append(k,c); // jenis + jumlah kamera dikelompokkan supaya mudah dipusatkan di layar kecil
+  kc.className="mc-kc";kc.append(k,c);
   card.append(kc,n,w);
   if(r){
     const a=document.createElement("a");
@@ -148,7 +148,6 @@ function drawHero(){
   heroDone=true;
 }
 const root=document.documentElement;
-// Jeda tambahan selama layar pembuka tampil (harus sama dengan jeda html.intro di home.css)
 const T0=root.classList.contains("intro")?1.6:0;
 const reduced=matchMedia("(prefers-reduced-motion:reduce)").matches&&!root.classList.contains("fullmotion");
 const sec=n=>(n).toFixed(2)+"s";

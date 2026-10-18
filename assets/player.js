@@ -1,8 +1,3 @@
-// Stream "fb" (Bali Satu Data) dinyalakan server saat diminta, sehingga permintaan pertama bisa menggantung lama
-// padahal permintaan ulang (tombol refresh) langsung berhasil. Perbaikannya:
-// 1) CONNECT_MS: bila belum ada segmen video setelah sekian detik, permintaan dibatalkan dan diulang otomatis (sama seperti refresh).
-// 2) connAcquire: paling banyak CONN_MAX kamera yang sedang "menyambung" sekaligus, supaya permintaan menggantung tidak
-//    menghabiskan batas koneksi per host di browser (sekitar 6) dan memblokir kamera lain.
 const CONNECT_MS=[7e3,8e3,10e3,12e3,15e3],CONN_MAX=4,connQ=[];let connN=0;
 function connPump(){while(connN<CONN_MAX&&connQ.length){const k=connQ.shift();k.held=!0,connN++,k.safe=setTimeout(k.release,CONNECT_MS[CONNECT_MS.length-1]+3e3),k.go()}}
 function connAcquire(go){const k={go,held:!1,done:!1,safe:null,release(){if(k.done)return;k.done=!0,clearTimeout(k.safe);if(k.held)connN--,connPump();else{const i=connQ.indexOf(k);i>=0&&connQ.splice(i,1)}}};return connQ.push(k),connPump(),k}
@@ -41,12 +36,6 @@ function attachMp4(a,t,e){
   return R;
 }
 
-// Rantai cadangan untuk kamera bertanda fb (server tanpa CORS / stream yang baru dinyalakan saat diminta).
-// Langkah: 1) hls.js  2) pemutar HLS bawaan browser (Safari/iOS)  3) proxy (PROXY di cameras.js, opsional).
-// - Pindah langkah hanya bila gagalnya tampak seperti CORS/jaringan (kode respons 0). Galat HTTP (404/5xx)
-//   atau timeout dianggap stream belum siap: coba lagi di langkah yang sama.
-// - Dua kegagalan pertama tidak ditampilkan sebagai OFFLINE (tetap "MENCARI"); pada kegagalan ketiga baru OFFLINE.
-// - Langkah yang berhasil diingat per server (juga di localStorage) agar pembukaan berikutnya langsung memakainya.
 const stepMem={};
 function attachSmart(a,t,e){
   let host="";try{host=new URL(t.url).host}catch(x){}

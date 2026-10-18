@@ -1,15 +1,10 @@
-// Data kamera seluruh Bali.
-// Tiap kabupaten: id, nama, koordinat cuaca, sumber, cara membentuk URL, dan daftar kamera.
-// Baris kamera: [nama, detail lokasi, kunci stream, (opsional) URL penuh].
-// Halaman kabupaten menetapkan window.REGION_ID sebelum file ini dimuat; halaman lain (beranda, auto) memuat semua kamera.
 
 const BASE="https://atcs.denpasarkota.go.id/stream/";
-const INDEX_IDS=new Set(["A055","A103","A106","A115","A116","A117","A119"]); // kamera Denpasar yang memakai index.m3u8 (selain itu stream.m3u8)
+const INDEX_IDS=new Set(["A055","A103","A106","A115","A116","A117","A119"]);
 const TC="https://transcode.baliprov.go.id/cctv/";
 const SHI="https://shinobi.bulelengkab.go.id/Amk60KFacq87lQMvTCMHu17u00ONuC/mp4/admin/";
 const BSD=["Bali Satu Data","https://balisatudata.baliprov.go.id/"];
 const tc=k=>TC+k+"/video1_stream.m3u8";
-// Dipakai hanya bila hls.js dan pemutar bawaan browser gagal (server tanpa CORS). Kosongkan untuk menonaktifkan.
 const PROXY="";
 
 const regT=(n,kota)=>({

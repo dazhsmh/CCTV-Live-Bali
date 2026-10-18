@@ -1,5 +1,3 @@
-// Cloudflare Worker: proxy HLS dengan header CORS, khusus host Bali Satu Data dan Kemenhub.
-// Format: https://NAMA.workers.dev/<host>/<path>  ->  https://<host>/<path>
 const ALLOW=["transcode.baliprov.go.id","mitradarat-vidstream.kemenhub.go.id"];
 const cors=()=>({"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Range","Access-Control-Expose-Headers":"Content-Length,Content-Range"});
 
@@ -13,7 +11,6 @@ export default{
     const h=new Headers(cors());
     const ct=up.headers.get("Content-Type");if(ct)h.set("Content-Type",ct);
     if(/\.m3u8$/i.test(path)||/mpegurl/i.test(ct||"")){
-      // Arahkan URL absolut di dalam playlist agar segmen juga lewat proxy
       const fix=p=>{
         if(/^https?:\/\//i.test(p)){const x=new URL(p);return ALLOW.includes(x.host)?self+"/"+x.host+x.pathname+x.search:p}
         return p.startsWith("/")?self+"/"+host+p:p;

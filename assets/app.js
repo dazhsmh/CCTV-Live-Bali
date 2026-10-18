@@ -145,7 +145,6 @@ function fill(){
     }
   }
 }
-// Kamera di luar layar dihentikan total (bukan sekadar dijeda), lalu disambung baru begitu tampil lagi.
 function parkCard(card){
   if(live.has(card))stopCam(card);
   if(card._tag!=="dijeda"){setTag(card,"dijeda");card.querySelector(".v").classList.remove("loading")}
@@ -270,7 +269,22 @@ function loadModal(c){
   const n=navCams().length>1;
   $("#dprev").hidden=$("#dnext").hidden=!n;
 }
+let lockY=null;
+function lockScroll(){
+  if(lockY!==null)return;
+  lockY=window.scrollY;
+  const b=document.body.style;
+  b.position="fixed";b.top=-lockY+"px";b.left=b.right="0";b.width="100%";
+}
+function unlockScroll(){
+  if(lockY===null)return;
+  const y=lockY;lockY=null;
+  const b=document.body.style;
+  b.position=b.top=b.left=b.right=b.width="";
+  window.scrollTo(0,y);
+}
 function openModal(c){
+  lockScroll();
   dlg.showModal();
   loadModal(c);
   syncHold();
@@ -315,6 +329,7 @@ $("#dv").addEventListener("loadedmetadata",()=>{const d=$("#dv");if(mcam&&mcam.p
 $("#dv").addEventListener("playing",()=>$("#mv").classList.remove("loading"));
 $("#dc").onclick=closeModal;
 dlg.addEventListener("close",()=>{
+  unlockScroll();
   if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document);
   $("#mv").classList.remove("loading");
   if(md){(md.hard||md)();md=null}

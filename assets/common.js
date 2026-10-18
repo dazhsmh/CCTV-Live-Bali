@@ -3,7 +3,6 @@ const $=s=>document.querySelector(s);
 
 const REGION_ID=(typeof REGION!=="undefined"&&REGION)?REGION.id:"";
 const SCOPED=["favs","sel","area","favOnly","onlyOnline","sortOnline"];
-// Kunci per kabupaten. Denpasar memakai kunci lama supaya data tersimpan tetap terbaca.
 const lk=(k,r)=>{r=r===undefined?REGION_ID:r;return"cctv."+k+(r&&r!=="denpasar"&&SCOPED.includes(k)?"."+r:"")};
 const LS={
   get(k,d,r){try{const v=localStorage.getItem(lk(k,r));return v===null?d:JSON.parse(v)}catch(e){return d}},

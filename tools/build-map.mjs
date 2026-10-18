@@ -1,5 +1,3 @@
-// Pakai:  node tools/build-map.mjs bali.geojson [toleransi=0.25] [lebar=900] [luasMin=1.5]
-// Toleransi kecil = bentuk lebih detail (file lebih besar). Coba 0.15 - 0.4.
 import fs from "node:fs";
 const [,, file, tolArg, wArg, minArg] = process.argv;
 if (!file) { console.error("Pakai: node tools/build-map.mjs bali.geojson [toleransi] [lebar]"); process.exit(1); }
@@ -28,7 +26,6 @@ function dp(pts, e) {
   if (m <= e) return [a, b];
   return [...dp(pts.slice(0, idx + 1), e).slice(0, -1), ...dp(pts.slice(idx), e)];
 }
-// Ring tertutup (awal = akhir) dipecah di titik terjauh dulu, kalau tidak Douglas-Peucker runtuh jadi satu titik
 function simplifyRing(r, e) {
   let pts = r.slice();
   if (pts.length > 1 && pts[0][0] === pts.at(-1)[0] && pts[0][1] === pts.at(-1)[1]) pts.pop();
