@@ -224,7 +224,7 @@ html[data-intro="fade"].intro .splash{animation-name:fadeout}
   .hero-t{max-width:12em;font-size:clamp(1.9rem,9vw,2.4rem);letter-spacing:-.02em}
   .hero-s{max-width:38ch}
 
-  .mcard{order:2;width:100%;max-width:400px;min-height:116px;padding:10px 14px;gap:0;
+  .mcard{order:2;width:100%;max-width:min(400px,calc(100% - 24px));min-height:116px;padding:10px 14px;gap:0;
     display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:6px;row-gap:2px;align-content:center;align-items:baseline;text-align:center}
   .mcard .mc-h{grid-column:1/-1}
   .mcard .mc-n{grid-column:1/-1;grid-row:1;font-size:1.25rem}
