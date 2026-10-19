@@ -1,6 +1,7 @@
 # CCTV Live Bali
 
-Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (230+ kamera, 8 wilayah).
+Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (230+ kamera, 8 wilayah).  
+Site: https://cctv-bali.satnar.my.id
 
 ## Disclaimer
 
