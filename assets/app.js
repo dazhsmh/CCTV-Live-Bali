@@ -47,10 +47,13 @@ function streetsOf(detail){
   return[...out];
 }
 CAMS.forEach(c=>{c.streets=c.streets||streetsOf(c.detail)});
+const CATS=["Jalan","Simpang","Pantai","Pura","Pasar","Taman","Kantor"];
 const AREAS=(()=>{
   const n=new Map();
   CAMS.forEach(c=>c.streets.forEach(s=>n.set(s,(n.get(s)||0)+1)));
-  return[...n].filter(([,k])=>k>=3).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,14).map(([s])=>s);
+  const roads=[...n].filter(([s,k])=>k>=3&&!CATS.includes(s)).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,14).map(([s])=>s);
+  const cats=CATS.filter(s=>n.has(s));
+  return[...roads,...cats];
 })();
 if(!AREAS.includes(area))area="";
 

@@ -201,7 +201,7 @@ function startClock(){
   return tick;
 }
 
-const WX_EXTRA={gianyar:{lat:-8.54,lon:115.33}};
+const WX_EXTRA={};
 const Weather=(()=>{
   const TTL=9*60*1000,cache={},bad={},busy={},subs=[];
   const pts={};

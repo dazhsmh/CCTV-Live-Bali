@@ -1,6 +1,6 @@
 # CCTV Live Bali
 
-Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (230+ kamera, 8 wilayah).  
+Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (260+ kamera, 9 wilayah).  
 Site: https://cctv-bali.satnar.my.id
 
 ## Disclaimer
@@ -10,7 +10,7 @@ Site: https://cctv-bali.satnar.my.id
 - Jika sumber membatasi atau mematikan stream, kamera terkait tidak akan tampil.
 - **Vibe code project**: kode dibuat dengan bantuan AI.
 
-Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/), [Bali Satu Data](https://balisatudata.baliprov.go.id/), [Bina Marga](https://binamarga.pu.go.id/), Kemenhub, dan Pemkab Buleleng. Cuaca dari [Open-Meteo](https://open-meteo.com/).
+Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/), [Bali Satu Data](https://balisatudata.baliprov.go.id/), [Bina Marga](https://binamarga.pu.go.id/), [Badilag Mahkamah Agung](https://badilag.mahkamahagung.go.id/) (CCTV Pengadilan Agama dan PTA Bali), dan Pemkab Buleleng. Cuaca dari [Open-Meteo](https://open-meteo.com/).
 
 ## Fitur
 

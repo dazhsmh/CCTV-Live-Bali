@@ -3,7 +3,22 @@ const BASE="https://atcs.denpasarkota.go.id/stream/";
 const INDEX_IDS=new Set(["A055","A103","A106","A115","A116","A117","A119"]);
 const TC="https://transcode.baliprov.go.id/cctv/";
 const SHI="https://shinobi.bulelengkab.go.id/Amk60KFacq87lQMvTCMHu17u00ONuC/mp4/admin/";
+const PA=["Badilag Mahkamah Agung","https://badilag.mahkamahagung.go.id/"];
 const BSD=["Bali Satu Data","https://balisatudata.baliprov.go.id/"];
+const PAB={
+ "ptabali":"ptabali.cctvbadilag.my.id/526724PTABALI",
+ "padenpasar":"padenpasar.cctvbadilag2.my.id/307822PADENPASAR",
+ "pabadung":"pabadung.cctvbadilag3.my.id/614731PABADUNG",
+ "patabanan":"patabanan.cctvbadilag.my.id/402757PATABANAN",
+ "paklungkung":"paklungkung.cctvbadilag.my.id/402763PAKLUNGKUNG",
+ "pabangli":"pabangli.cctvbadilag2.my.id/402726PABANGLI",
+ "pakarangasem":"pakarangasem.cctvbadilag2.my.id/402741PAKARANGASEM",
+ "pasingaraja":"pasingaraja.cctvbadilag2.my.id/307839PASINGARAJA",
+ "pagianyar":"pagianyar.cctvbadilag.my.id/402772PAGIANYAR",
+ "panegara":"panegara-bali.cctvbadilag.my.id/402732PANEGARA"};
+const isPA=k=>/^[a-z]+_\d{24}$/.test(k);
+const pa=k=>{const i=k.indexOf("_");return"https://"+PAB[k.slice(0,i)]+"/streams/"+k.slice(i+1)+".m3u8"};
+const viaKey=f=>k=>isPA(k)?pa(k):f(k);
 const tc=k=>TC+k+"/video1_stream.m3u8";
 const PROXY="";
 
@@ -19,7 +34,7 @@ const catOf=n=>{
   if(/\bpura\b|besakih/.test(n))return"Pura";
   if(/\bpasar\b/.test(n))return"Pasar";
   if(/taman/.test(n))return"Taman";
-  if(/kantor/.test(n))return"Kantor";
+  if(/kantor/.test(n)||/^(pa|pta)\b/.test(n))return"Kantor";
   return"";
 };
 
@@ -27,7 +42,7 @@ const REGIONS=[
 {id:"denpasar",name:"Denpasar",kota:true,lat:-8.65,lon:115.2167,
  srcs:[["ATCS Kota Denpasar","https://atcs.denpasarkota.go.id/"],BSD],
  idOf:k=>/PANORAMIC$/.test(k)?k.slice(0,4)+"P":/PTZ2$/.test(k)?k.slice(0,4)+"b":/^A\d{3}/.test(k)?k.slice(0,4):"bsd-"+k,
- link:k=>BASE+k+"/"+(!/PANORAMIC$/.test(k)&&INDEX_IDS.has(k.slice(0,4))?"index":"stream")+".m3u8",
+ link:viaKey(k=>BASE+k+"/"+(!/PANORAMIC$/.test(k)&&INDEX_IDS.has(k.slice(0,4))?"index":"stream")+".m3u8"),
  raw:[
   ["GUNUNG AGUNG","Simpang Wahidin - Gunung Agung","A001GUNUNGAGUNGPTZ"],
   ["KAPTEN SUJANA","Simpang Buluh indah - Gunung Agung","A002KAPTENSUJANAPTZ"],
@@ -177,9 +192,13 @@ const REGIONS=[
   ["SIMPANG PAMELISAN","","simpang-pamelisan",tc("simpang-pamelisan"),true],
   ["SIMPANG TIRTANADI","","simpang-tirtanadi",tc("simpang-tirtanadi"),true],
   ["SIMPANG BALI BEACH","","simpang-bali-beach",tc("simpang-bali-beach"),true],
-  ["SIMPANG PADANG GALAK","","simpang-padang-galak",tc("simpang-padang-galak"),true]
+  ["SIMPANG PADANG GALAK","","simpang-padang-galak",tc("simpang-padang-galak"),true],
+  ["PTA BALI - KANTIN/MUSHOLA/HALAMAN PARKIR","","ptabali_994856766082571512795586"],
+  ["PTA BALI - PTSP","","ptabali_135941635160011832742680"],
+  ["PA. DENPASAR - PTSP","","padenpasar_726952118008954435202528"],
+  ["PA. DENPASAR - RUANG TUNGGU SIDANG","","padenpasar_537445156579322588529239"]
  ]},
-{id:"badung",name:"Badung",p:"bdg-",lat:-8.70,lon:115.17,srcs:[BSD],gf:true,cat:true,fb:true,link:tc,raw:[
+{id:"badung",name:"Badung",p:"bdg-",lat:-8.70,lon:115.17,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["Pantai Jimbaran CO1 CCTV1","","pantai-jimbaran-co1-cctv1"],
   ["Pantai Jimbaran CO1 CCTV2","","pantai-jimbaran-co1-cctv2"],
   ["Pantai Kedonganan CO1 CCTV1","","pantai-kedongan-co1-cctv1"],
@@ -217,16 +236,22 @@ const REGIONS=[
   ["Underpass Ngurah Rai Selatan","","underpass-ngurah-rai-selatan"],
   ["Underpass Ngurah Rai Utara","","underpass-ngurah-rai-utara"],
   ["Simpang Patung Kuda","","simpang-patung-kuda"],
-  ["Petang","","petang-co1-cctv1"]
+  ["Petang","","petang-co1-cctv1"],
+  ["PA. BADUNG - KANTIN/MUSHOLA/HALAMAN PARKIR","","pabadung_196279577664716299414744"],
+  ["PA. BADUNG - PTSP","","pabadung_985927513771948866538871"],
+  ["PA. BADUNG - RUANG TUNGGU SIDANG","","pabadung_829301527986741433683610"]
  ]},
-{id:"tabanan",name:"Tabanan",p:"tbn-",lat:-8.54,lon:115.13,srcs:[BSD],gf:true,cat:true,fb:true,link:tc,raw:[
+{id:"tabanan",name:"Tabanan",p:"tbn-",lat:-8.54,lon:115.13,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["CCTV WiFi Corner Dangin Carik 1","","cctv-wifi-corne-dangin-carik-1"],
   ["CCTV Bale Bengong","","cctv-belakang-garuda"],
   ["CCTV WiFi Corner Gedung Maario 1","","cctv-wifi-corner-gedung-maario-1"],
   ["CCTV WiFi Corner Gedung Maario 2","","cctv-wifi-corner-gedung-maario-2"],
-  ["Taman Kota","","taman-kota"]
+  ["Taman Kota","","taman-kota"],
+  ["PA. TABANAN - PTSP","","patabanan_858347488199281951361667"],
+  ["PA. TABANAN - KANTIN/MUSHOLA/HALAMAN PARKIR","","patabanan_093003957286648759716552"],
+  ["PA. TABANAN - RUANG TUNGGU SIDANG","","patabanan_954012430010742942202299"]
  ]},
-{id:"klungkung",name:"Klungkung",p:"klk-",lat:-8.53,lon:115.40,srcs:[BSD],gf:true,cat:true,fb:true,link:tc,raw:[
+{id:"klungkung",name:"Klungkung",p:"klk-",lat:-8.53,lon:115.40,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["Simpang Lepang","","simpang-lepang"],
   ["Perempatan Tojan","","perempatan-tojan"],
   ["Perbatasan Klungkung-Gianyar","","perbatasan-klungkung-gianyar"],
@@ -236,12 +261,19 @@ const REGIONS=[
   ["Simpang Lima","","simpang-lima"],
   ["Pasar Senggol","","pasar-senggol"],
   ["Catus Pata","","catus-pata"],
-  ["Perempatan Pasar Satria","","perempatan-pasar-satria"]
+  ["Perempatan Pasar Satria","","perempatan-pasar-satria"],
+  ["PA. KLUNGKUNG - KANTIN/MUSHOLA/HALAMAN PARKIR","","paklungkung_030113053738749084283171"],
+  ["PA. KLUNGKUNG - KANTIN/MUSHOLA/HALAMAN PARKIR 2","","paklungkung_115063314256899456527259"],
+  ["PA. KLUNGKUNG - PTSP","","paklungkung_526589325161357288456458"],
+  ["PA. KLUNGKUNG - RUANG TUNGGU SIDANG","","paklungkung_227348041197056739134644"]
  ]},
-{id:"bangli",name:"Bangli",p:"bgl-",lat:-8.25,lon:115.39,srcs:[BSD],gf:true,cat:true,fb:true,link:tc,raw:[
-  ["Pura Batur","","pura-batur"]
+{id:"bangli",name:"Bangli",p:"bgl-",lat:-8.25,lon:115.39,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
+  ["Pura Batur","","pura-batur"],
+  ["PA. BANGLI - PTSP","","pabangli_623884118713840023083061"],
+  ["PA. BANGLI - KANTIN/MUSHOLA/HALAMAN PARKIR","","pabangli_681752936680628308033099"],
+  ["PA. BANGLI - RUANG TUNGGU SIDANG","","pabangli_579367644046378337662856"]
  ]},
-{id:"karangasem",name:"Karangasem",p:"kra-",lat:-8.45,lon:115.61,srcs:[BSD],gf:true,cat:true,fb:true,link:tc,raw:[
+{id:"karangasem",name:"Karangasem",p:"kra-",lat:-8.45,lon:115.61,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["Depan Pura Goa Lawah","","depan-pura-goa-lawah"],
   ["Pertigaan Subagan","","pertigaan-subagan"],
   ["Pertigaan Kodim","","pertigaan-kodim"],
@@ -250,9 +282,12 @@ const REGIONS=[
   ["Besakih (Jalan Masuk Utama)","","pura-besakih-jalan-masuk-utama"],
   ["Besakih (Tangga Timur Penataran)","","pura-besakih-tangga-timur-penataran"],
   ["Besakih (Pos Polisi)","","pura-besakih-pos-polisi"],
-  ["Besakih (Pintu Keluar Pewaregan)","","pura-besakih-pintu-keluar-pewaregan"]
+  ["Besakih (Pintu Keluar Pewaregan)","","pura-besakih-pintu-keluar-pewaregan"],
+  ["PA. KARANGASEM - PTSP","","pakarangasem_331404717480413306977090"],
+  ["PA. KARANGASEM - KANTIN/MUSHOLA/HALAMAN PARKIR","","pakarangasem_819171209336697543225689"],
+  ["PA. KARANGASEM - RUANG TUNGGU SIDANG","","pakarangasem_479115373005134683839886"]
  ]},
-{id:"buleleng",name:"Buleleng",p:"bll-",lat:-8.11,lon:115.09,srcs:[BSD],gf:true,cat:true,link:k=>SHI+k+"/s.mp4",raw:[
+{id:"buleleng",name:"Buleleng",p:"bll-",lat:-8.11,lon:115.09,srcs:[BSD],gf:true,cat:true,link:viaKey(k=>SHI+k+"/s.mp4"),raw:[
   ["Simpang Seririt","","edROyIUx2v80"],
   ["PTZ Laksmigraha","","0RRzM22qNF80"],
   ["Taman Yuwana Asri","","isOvCBwVIA80"],
@@ -269,12 +304,23 @@ const REGIONS=[
   ["Pasar Anyar 2","","1eB6RDETQG80"],
   ["Barat Tugu Singa","","d4LXaKRi2380"],
   ["Catus Pata","","3JFbU8gu4j80"],
-  ["Simpang Penarukan","","8HbHNfGypg80"]
+  ["Simpang Penarukan","","8HbHNfGypg80"],
+  ["PA. SINGARAJA - PTSP","","pasingaraja_471415532250322699318328"],
+  ["PA. SINGARAJA - KANTIN/MUSHOLA/HALAMAN PARKIR","","pasingaraja_406898451087133309342501"],
+  ["PA. SINGARAJA - RUANG TUNGGU SIDANG","","pasingaraja_187635833312775882958311"]
  ]},
-{id:"jembrana",name:"Jembrana",p:"jbr-",lat:-8.36,lon:114.63,srcs:[BSD,["Bina Marga","https://binamarga.pu.go.id/"]],gf:true,cat:true,fb:true,link:tc,raw:[
+ {id:"gianyar",name:"Gianyar",p:"gny-",lat:-8.54,lon:115.33,srcs:[PA],gf:true,cat:true,fb:true,link:pa,raw:[
+  ["PA. GIANYAR - KANTIN/MUSHOLA/HALAMAN PARKIR","","pagianyar_909437611255840929667097"],
+  ["PA. GIANYAR - PTSP","","pagianyar_324589661299927499715144"],
+  ["PA. GIANYAR - RUANG TUNGGU SIDANG","","pagianyar_107094474794099260861515"]
+ ]},
+ {id:"jembrana",name:"Jembrana",p:"jbr-",lat:-8.36,lon:114.63,srcs:[BSD,["Bina Marga","https://binamarga.pu.go.id/"]],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["Perempatan Sudirman","","perempatan-sudirman"],
   ["Terminal Cargo Jembrana","","terminal-cargo"],
-  ["Gilimanuk","","gilimanuk","https://mitradarat-vidstream.kemenhub.go.id/stream/GLMNKCCTVGILIMANUK2/stream.m3u8"]
+  ["Gilimanuk","","gilimanuk","https://mitradarat-vidstream.kemenhub.go.id/stream/GLMNKCCTVGILIMANUK2/stream.m3u8"],
+  ["PA. NEGARA - PTSP","","panegara_369523806084189842515290"],
+  ["PA. NEGARA - KANTIN/MUSHOLA/HALAMAN PARKIR","","panegara_321903017227467350551485"],
+  ["PA. NEGARA - RUANG TUNGGU SIDANG","","panegara_764632862861129543258697"]
  ]}
 ];
 
@@ -288,8 +334,9 @@ const CAMS_ALL=(()=>{
       seen.add(id);
       const c={id,name,detail,url:full||r.link(key),region:r.id};
       if(/PANORAMIC$/.test(key))c.pano=true;
-      if(r.fb||fb)c.fb=true;
+      if(r.fb||fb||isPA(key))c.fb=true;
       if(r.cat){const g=catOf(name);c.streets=g?[g]:[]}
+      else if(!detail){const g=catOf(name);if(g)c.streets=[g]}
       return c;
     });
     delete r.raw;

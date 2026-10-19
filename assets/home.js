@@ -16,7 +16,7 @@ let chosen=(()=>{
 })();
 
 const NS="http://www.w3.org/2000/svg";
-const NAMES={gianyar:"Gianyar"};
+const NAMES={};
 const RMAP=new Map(REGIONS.map(r=>[r.id,r]));
 const MAPIDS=Object.keys(BALI_MAP.regions).sort((a,b)=>BALI_MAP.regions[a].cx-BALI_MAP.regions[b].cx);
 const VB=BALI_MAP.vb;
