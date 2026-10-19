@@ -1,16 +1,16 @@
 # CCTV Live Bali
 
-Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (260+ kamera, 9 wilayah).  
+Website statis open source untuk memantau CCTV publik di seluruh kabupaten/kota di Bali (280+ kamera, 9 wilayah).  
 Site: https://cctv-bali.satnar.my.id
 
 ## Disclaimer
 
 - Proyek pribadi, **tidak berafiliasi dengan Pemprov Bali, pemerintah kabupaten/kota, maupun penyedia stream**.
-- Video diambil langsung dari server sumber oleh browser pengunjung. Tidak disimpan atau disiarkan ulang. Hak atas video milik masing-masing sumber.
+- Video diambil dari server sumber, sebagian besar langsung oleh browser pengunjung. Stream yang servernya membatasi akses (saat ini Desa Punggul) diteruskan lewat proxy Cloudflare Worker hanya untuk menambahkan header yang diperlukan. Video tidak disimpan. Hak atas video milik masing-masing sumber.
 - Jika sumber membatasi atau mematikan stream, kamera terkait tidak akan tampil.
 - **Vibe code project**: kode dibuat dengan bantuan AI.
 
-Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/), [Bali Satu Data](https://balisatudata.baliprov.go.id/), [Bina Marga](https://binamarga.pu.go.id/), [Badilag Mahkamah Agung](https://badilag.mahkamahagung.go.id/) (CCTV Pengadilan Agama dan PTA Bali), dan Pemkab Buleleng. Cuaca dari [Open-Meteo](https://open-meteo.com/).
+Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/), [Bali Satu Data](https://balisatudata.baliprov.go.id/), [Bina Marga](https://binamarga.pu.go.id/), [Badilag Mahkamah Agung](https://badilag.mahkamahagung.go.id/) (CCTV Pengadilan Agama dan PTA Bali), dan Pemkab Buleleng, serta [CCTV Desa Punggul](https://cctv.punggul.desa.id/) (Kecamatan Abiansemal, Kabupaten Badung). Cuaca dari [Open-Meteo](https://open-meteo.com/).
 
 ## Fitur
 
@@ -35,13 +35,15 @@ Sumber video: [ATCS Kota Denpasar](https://atcs.denpasarkota.go.id/), [Bali Satu
 | `assets/cameras.js` | Daftar wilayah dan kamera |
 | `assets/common.js` | Konfigurasi, terjemahan, penyimpanan lokal, cuaca, tema |
 | `assets/player.js` | Pemutar HLS (hls.js dari CDN) |
-| `worker.js` | Proxy CORS opsional (Cloudflare Worker) |
+| `worker.js` | Proxy (Cloudflare Worker): CORS dan sesi untuk host tertentu, termasuk stream Desa Punggul |
 | `sw.js`, `manifest.json` | PWA |
 | `tools/build-map.mjs` | Membuat `bali-map.js` dari GeoJSON batas wilayah |
 
 ## Pengaturan
 
-- `cameras.js`: tambah/ubah kamera di daftar tiap wilayah. Isi `PROXY` dengan URL Worker bila ada stream yang terblokir CORS.
+- `cameras.js`: tambah/ubah kamera di daftar tiap wilayah. Kamera Desa Punggul ditulis di `PGL` dengan format `["Lokasi | Nama CCTV", nomorKamera]`; lokasi otomatis diformat sebagai nama jalan standar dan nama CCTV otomatis huruf kapital. Nama semua kamera ditampilkan dengan huruf kapital.
+- `cameras.js` (`PROXY`): isi dengan URL Worker. Wajib untuk kamera Desa Punggul, dan opsional untuk stream lain yang terblokir CORS.
+- `worker.js`: daftar host yang diizinkan ada di `ALLOW`, dan header Origin/Referer per host di `HOSTH`. Deploy ke Cloudflare Workers.
 - `common.js`: `maxLive` untuk jumlah kamera diputar bersamaan, `T` untuk teks/terjemahan.
 - `auto.js`: `INTERVALS` untuk pilihan lama tampil per kamera.
 - `sw.js`: naikkan `VERSION` setiap kali file situs berubah.
@@ -50,4 +52,4 @@ Semakin banyak pengunjung, semakin besar beban server sumber. Turunkan `maxLive`
 
 ## Privasi
 
-Preferensi hanya disimpan di browser (`localStorage`, awalan `cctv.`) dan tidak dikirim ke mana pun. Permintaan eksternal hanya ke server video sumber, CDN hls.js, Google Fonts, dan Open-Meteo.
+Preferensi hanya disimpan di browser (`localStorage`, awalan `cctv.`) dan tidak dikirim ke mana pun. Permintaan eksternal hanya ke server video sumber, proxy Cloudflare Worker (untuk stream tertentu), CDN hls.js, Google Fonts, dan Open-Meteo.

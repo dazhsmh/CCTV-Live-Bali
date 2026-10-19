@@ -1,4 +1,3 @@
-
 const BASE="https://atcs.denpasarkota.go.id/stream/";
 const INDEX_IDS=new Set(["A055","A103","A106","A115","A116","A117","A119"]);
 const TC="https://transcode.baliprov.go.id/cctv/";
@@ -21,6 +20,34 @@ const pa=k=>{const i=k.indexOf("_");return"https://"+PAB[k.slice(0,i)]+"/streams
 const viaKey=f=>k=>isPA(k)?pa(k):f(k);
 const tc=k=>TC+k+"/video1_stream.m3u8";
 const PROXY="";
+const PGU="https://stream.punggul.desa.id/camera";
+const roadStd=t=>t.replace(/\bJl\.?(?=\s)/gi,"Jalan").replace(/\b(Persimpangan|Pertigaan|Perempatan)\b/gi,"Simpang").toLowerCase().replace(/(^|\s)(\S)/g,(_,a,b)=>a+b.toUpperCase()).replace(/\s+/g," ").trim();
+const PG=([t,n])=>{const i=t.indexOf("|");return[(i<0?t:t.slice(i+1)).trim().toUpperCase(),i<0?"":roadStd(t.slice(0,i)),"punggul-camera"+n,PGU+n+"/index.m3u8"]};
+const PGL=[
+  ["Kantor Desa Punggul 1 | Timur - Halaman",1],
+  ["Kantor Desa Punggul 2 | Barat - Depan",3],
+  ["Kantor Desa Punggul 3 | Barat - Parkir",4],
+  ["Banjar Kelodan",5],
+  ["Banjar Trinadi",6],
+  ["Banjar Tengah",7],
+  ["Banjar Padang",8],
+  ["Banjar Teguan",9],
+  ["Kantor Desa Punggul 4 | Timur - Parkir",10],
+  ["Jl Anggrek | Paud Jalan",11],
+  ["Jl Anggrek | Lapangan Futsal",12],
+  ["Jl Raya Punggul | TPS3R Depan",13],
+  ["Jl Raya Punggul | TPS3R Belakang",14],
+  ["Jl Raya Punggul | Balai Sebelah Timur Pura Dalem",15],
+  ["Simpang Punggul | Persimpangan Jl Raya Punggul - Jl Anggrek",16],
+  ["Desa Punggul | Pertigaan Hadap Timur",17],
+  ["Desa Punggul | Pertigaan Hadap Utara",18],
+  ["Desa Punggul | Pertigaan Hadap Selatan",19],
+  ["Desa Punggul | Batas Desa Timur",20],
+  ["Desa Punggul | Paud Timur",24],
+  ["Desa Punggul | Paud Taman Bermain 1",32],
+  ["Desa Punggul | Paud Taman Bermain 2",34],
+  ["Desa Punggul | Paud Gerbang Masuk",33]
+];
 
 const regT=(n,kota)=>({
   id:{title:"CCTV Live "+n,subtitle:"Pantauan CCTV "+(kota?"Kota ":"Kabupaten ")+n},
@@ -198,7 +225,7 @@ const REGIONS=[
   ["PA. DENPASAR - PTSP","","padenpasar_726952118008954435202528"],
   ["PA. DENPASAR - RUANG TUNGGU SIDANG","","padenpasar_537445156579322588529239"]
  ]},
-{id:"badung",name:"Badung",p:"bdg-",lat:-8.70,lon:115.17,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
+{id:"badung",name:"Badung",p:"bdg-",lat:-8.70,lon:115.17,srcs:[BSD,["Desa Punggul","https://punggul.desa.id/"]],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
   ["Pantai Jimbaran CO1 CCTV1","","pantai-jimbaran-co1-cctv1"],
   ["Pantai Jimbaran CO1 CCTV2","","pantai-jimbaran-co1-cctv2"],
   ["Pantai Kedonganan CO1 CCTV1","","pantai-kedongan-co1-cctv1"],
@@ -237,6 +264,7 @@ const REGIONS=[
   ["Underpass Ngurah Rai Utara","","underpass-ngurah-rai-utara"],
   ["Simpang Patung Kuda","","simpang-patung-kuda"],
   ["Petang","","petang-co1-cctv1"],
+  ...PGL.map(PG),
   ["PA. BADUNG - KANTIN/MUSHOLA/HALAMAN PARKIR","","pabadung_196279577664716299414744"],
   ["PA. BADUNG - PTSP","","pabadung_985927513771948866538871"],
   ["PA. BADUNG - RUANG TUNGGU SIDANG","","pabadung_829301527986741433683610"]
@@ -332,10 +360,10 @@ const CAMS_ALL=(()=>{
       let id=r.idOf?r.idOf(key):r.p+key;
       while(seen.has(id))id+="b";
       seen.add(id);
-      const c={id,name,detail,url:full||r.link(key),region:r.id};
+      const c={id,name:name.toUpperCase(),detail,url:full||r.link(key),region:r.id};
       if(/PANORAMIC$/.test(key))c.pano=true;
       if(r.fb||fb||isPA(key))c.fb=true;
-      if(r.cat){const g=catOf(name);c.streets=g?[g]:[]}
+      if(r.cat){const g=catOf(detail)||catOf(name);c.streets=g?[g]:[]}
       else if(!detail){const g=catOf(name);if(g)c.streets=[g]}
       return c;
     });

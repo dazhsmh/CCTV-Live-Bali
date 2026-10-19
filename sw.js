@@ -1,4 +1,4 @@
-const VERSION="v15";
+const VERSION="v16";
 const CACHE="cctv-bali-"+VERSION;
 const SHELL=["./","manifest.json","icons/icon-192.png","icons/icon-512.png","assets/style.css","assets/home.css","assets/auto.css","assets/multi.css"];
 
