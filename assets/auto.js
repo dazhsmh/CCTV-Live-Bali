@@ -68,6 +68,7 @@ const listFor=src=>{
 
 function setTag(s){
   lastTag=s;
+  $("#glitch").classList.toggle("show",s==="cari"||s==="off");
   const tg=$("#ktag");
   tg.className="ktag "+(s==="on"||s==="off"?s:"");
   tg.textContent=t("tag_"+s);
@@ -92,6 +93,7 @@ function show(i){
   if(!list.length){
     if(handle){(handle.hard||handle)();handle=null}
     msg.textContent=t(onlyOn?"k_none_online":"k_none");msg.hidden=false;
+    $("#glitch").classList.remove("show");
     $("#kname").textContent="";$("#kdetail").textContent="";
     $("#ktag").className="ktag";$("#ktag").textContent="";
     drawCount();restartProgress();
