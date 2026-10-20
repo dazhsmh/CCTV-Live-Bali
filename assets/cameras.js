@@ -275,8 +275,8 @@ const REGIONS=[
   ["CCTV WiFi Corner Gedung Maario 1","","cctv-wifi-corner-gedung-maario-1"],
   ["CCTV WiFi Corner Gedung Maario 2","","cctv-wifi-corner-gedung-maario-2"],
   ["Taman Kota","","taman-kota"],
-  ["PA. TABANAN - PTSP","","patabanan_858347488199281951361667"],
-  ["PA. TABANAN - KANTIN/MUSHOLA/HALAMAN PARKIR","","patabanan_093003957286648759716552"],
+  ["PA. TABANAN - PTSP","","patabanan_093003957286648759716552"],
+  ["PA. TABANAN - KANTIN/MUSHOLA/HALAMAN PARKIR","","patabanan_858347488199281951361667"],
   ["PA. TABANAN - RUANG TUNGGU SIDANG","","patabanan_954012430010742942202299"]
  ]},
 {id:"klungkung",name:"Klungkung",p:"klk-",lat:-8.53,lon:115.40,srcs:[BSD],gf:true,cat:true,fb:true,link:viaKey(tc),raw:[
